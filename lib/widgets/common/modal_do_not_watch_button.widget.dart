@@ -4,8 +4,8 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:audioplayers/audioplayers.dart';
 import 'package:king_of_lateral_thinking_2/providers/common.provider.dart';
 
-class ModalCloseButton extends HookWidget {
-  const ModalCloseButton({Key? key}) : super(key: key);
+class ModalDoNotWatchButton extends HookWidget {
+  const ModalDoNotWatchButton({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -16,7 +16,7 @@ class ModalCloseButton extends HookWidget {
       width: 90,
       height: 40,
       child: ElevatedButton(
-        child: const Text('閉じる'),
+        child: const Text('見ない'),
         style: ElevatedButton.styleFrom(
           primary: Colors.red.shade500,
           padding: const EdgeInsets.only(

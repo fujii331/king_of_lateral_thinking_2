@@ -3,6 +3,7 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:audioplayers/audioplayers.dart';
 import 'package:king_of_lateral_thinking_2/providers/common.provider.dart';
+import 'package:king_of_lateral_thinking_2/widgets/common/modal_close_button.widget.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class SoundMode extends HookWidget {
@@ -22,7 +23,7 @@ class SoundMode extends HookWidget {
       padding: const EdgeInsets.only(
         left: 5,
         right: 5,
-        bottom: 35,
+        bottom: 20,
       ),
       child: Column(
         mainAxisSize: MainAxisSize.min,
@@ -130,6 +131,8 @@ class SoundMode extends HookWidget {
               ),
             ),
           ),
+          const SizedBox(height: 25),
+          const ModalCloseButton(),
         ],
       ),
     );

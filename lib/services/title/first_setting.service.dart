@@ -32,20 +32,15 @@ void firstSetting(BuildContext context) async {
       .setVolume(context.read(bgmVolumeProvider).state);
 
   context.read(soundEffectProvider).state.loadAll([
-    'sounds/correct_answer.mp3',
-    'sounds/tap.mp3',
+    'sounds/answer.mp3',
     'sounds/cancel.mp3',
-    'sounds/quiz_button.mp3',
-    'sounds/hint.mp3',
     'sounds/change.mp3',
-    'sounds/fault.mp3',
-    'sounds/finish.mp3',
-    'sounds/funny.mp3',
-    'sounds/push.mp3',
-    'sounds/ready.mp3',
-    'sounds/start.mp3',
+    'sounds/correct_answer.mp3',
+    'sounds/get_final_answer.mp3',
+    'sounds/hint.mp3',
+    'sounds/quiz_button.mp3',
+    'sounds/tap.mp3',
     'sounds/think.mp3',
-    'sounds/wrong_answer.mp3',
   ]);
 
   // 遊び方に誘導するかの判定
@@ -56,8 +51,8 @@ void firstSetting(BuildContext context) async {
   }
 
   // 入力時設定
-  context.read(displayInputFlgProvider).state =
-      prefs.getBool('displayInputFlg') ?? false;
+  context.read(alwaysDisplayInputProvider).state =
+      prefs.getBool('alwaysDisplayInput') ?? false;
 
   // 正解済みの問題を設定
   if (prefs.getStringList('alreadyAnsweredIds') == null) {

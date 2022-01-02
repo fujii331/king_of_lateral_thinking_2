@@ -40,7 +40,7 @@ class QuizListScreen extends HookWidget {
         ),
         elevation: 0,
         centerTitle: true,
-        backgroundColor: Colors.blueGrey.shade800.withOpacity(0.5),
+        backgroundColor: Colors.blueGrey.shade800.withOpacity(0.6),
         actions: <Widget>[
           PopupMenuButton<int>(
             elevation: 20,

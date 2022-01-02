@@ -116,6 +116,23 @@ class TitleButton extends HookWidget {
               width: MediaQuery.of(context).size.width * .86 > 650 ? 650 : null,
               body: SoundMode(soundEffect: soundEffect),
             ).show();
+            // 分析データ作成用
+            // for (int i = 1; i <= 36; i++) {
+            //   DatabaseReference firebaseInstance = FirebaseDatabase.instance
+            //       .ref()
+            //       .child('analytics/' + i.toString());
+
+            //   firebaseInstance.set({
+            //     'hint1Count': 0,
+            //     'hint2Count': 0,
+            //     'hint3Count': 0,
+            //     'subHintCount': 0,
+            //     'relatedWordCount': 0,
+            //     'questionCount': 0,
+            //     'userCount': 0,
+            //     'noHintCount': 0,
+            //   });
+            // }
           }
         },
       ),

@@ -1,15 +1,17 @@
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:king_of_lateral_thinking_2/providers/common.provider.dart';
+import 'package:king_of_lateral_thinking_2/screens/quiz_detail_tab.screen.dart';
 import 'package:king_of_lateral_thinking_2/screens/quiz_list.screen.dart';
 import 'package:king_of_lateral_thinking_2/screens/title.screen.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-void main() {
+void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  // await Firebase.initializeApp();
+  await Firebase.initializeApp();
   MobileAds.instance.initialize();
 
   runApp(
@@ -101,11 +103,6 @@ class MyApp extends HookWidget {
       context,
     );
 
-    // context
-    //     .read(bgmProvider)
-    //     .state
-    //     .setVolume(context.read(bgmVolumeProvider).state);
-
     return MaterialApp(
       title: '謎解きの王様2',
       debugShowCheckedModeBanner: false,
@@ -132,29 +129,15 @@ class MyApp extends HookWidget {
               button: const TextStyle(
                 fontSize: 19.0,
               ),
-              headline1: const TextStyle(
-                fontSize: 18.0,
-                color: Colors.white,
-                fontFamily: 'NotoSerifJP',
-              ),
-              headline2: const TextStyle(
-                // 質問済みリスト用 黒
-                fontSize: 18.0,
-                color: Colors.black,
-                fontFamily: 'NotoSerifJP',
-              ),
-              headline3: const TextStyle(
-                // 質問済みリスト用 黒 小さめ
-                fontSize: 16.0,
-                color: Colors.black,
-                fontFamily: 'NotoSerifJP',
-              ),
             ),
       ),
       initialRoute: '/',
       routes: <String, WidgetBuilder>{
         '/': (BuildContext context) => const TitleScreen(),
-        QuizListScreen.routeName: (BuildContext context) => QuizListScreen(),
+        QuizListScreen.routeName: (BuildContext context) =>
+            const QuizListScreen(),
+        QuizDetailTabScreen.routeName: (BuildContext context) =>
+            const QuizDetailTabScreen(),
       },
       onUnknownRoute: (settings) {
         return MaterialPageRoute(

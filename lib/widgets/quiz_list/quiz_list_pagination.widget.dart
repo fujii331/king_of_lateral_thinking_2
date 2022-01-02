@@ -48,13 +48,16 @@ class QuizListPagination extends HookWidget {
       onPressed: () => {
         screenNo.value = toScreenNo,
       },
-      child: Text(
-        icon,
-        style: const TextStyle(
-          fontSize: 25.0,
-          color: Colors.white,
-          fontWeight: FontWeight.bold,
-          height: 1,
+      child: Padding(
+        padding: const EdgeInsets.only(left: 3),
+        child: Text(
+          icon,
+          style: const TextStyle(
+            fontSize: 25.0,
+            color: Colors.white,
+            fontWeight: FontWeight.bold,
+            height: 1,
+          ),
         ),
       ),
       style: ElevatedButton.styleFrom(

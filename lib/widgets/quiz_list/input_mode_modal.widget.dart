@@ -14,7 +14,8 @@ class InputModeModal extends HookWidget {
   @override
   Widget build(BuildContext context) {
     final AudioCache soundEffect = useProvider(soundEffectProvider).state;
-    final bool displayInputFlg = useProvider(displayInputFlgProvider).state;
+    final bool alwaysDisplayInput =
+        useProvider(alwaysDisplayInputProvider).state;
     final double seVolume = useProvider(seVolumeProvider).state;
 
     return Padding(
@@ -38,8 +39,8 @@ class InputModeModal extends HookWidget {
                   volume: seVolume,
                 );
                 SharedPreferences prefs = await SharedPreferences.getInstance();
-                prefs.setBool('displayInputFlg', false);
-                context.read(displayInputFlgProvider).state = false;
+                prefs.setBool('alwaysDisplayInput', false);
+                context.read(alwaysDisplayInputProvider).state = false;
               },
               child: const Text('レイアウトを固定'),
               style: ElevatedButton.styleFrom(
@@ -47,7 +48,7 @@ class InputModeModal extends HookWidget {
                   right: 14,
                   left: 14,
                 ),
-                primary: displayInputFlg
+                primary: alwaysDisplayInput
                     ? Colors.blue.shade200
                     : Colors.blue.shade400,
                 textStyle: Theme.of(context).textTheme.button,
@@ -66,8 +67,8 @@ class InputModeModal extends HookWidget {
               );
               SharedPreferences prefs = await SharedPreferences.getInstance();
 
-              prefs.setBool('displayInputFlg', true);
-              context.read(displayInputFlgProvider).state = true;
+              prefs.setBool('alwaysDisplayInput', true);
+              context.read(alwaysDisplayInputProvider).state = true;
             },
             child: const Text('入力欄を常に表示'),
             style: ElevatedButton.styleFrom(
@@ -75,7 +76,7 @@ class InputModeModal extends HookWidget {
                 right: 14,
                 left: 14,
               ),
-              primary: displayInputFlg
+              primary: alwaysDisplayInput
                   ? Colors.orange.shade600
                   : Colors.orange.shade200,
               textStyle: Theme.of(context).textTheme.button,
@@ -89,7 +90,7 @@ class InputModeModal extends HookWidget {
               top: 15,
             ),
             child: Text(
-              displayInputFlg
+              alwaysDisplayInput
                   ? '主語と関連語の入力時、常に入力欄が見えるように調整します。'
                   : '主語と関連語の入力時、画面のレイアウトをそのまま固定します。',
               style: const TextStyle(
@@ -103,7 +104,7 @@ class InputModeModal extends HookWidget {
             height: 54,
             padding: const EdgeInsets.only(top: 8.0),
             child: Text(
-              displayInputFlg ? '※小さい端末向け\n　一部背景の変更あり' : '※大きい端末向け',
+              alwaysDisplayInput ? '※小さい端末向け\n　一部背景の変更あり' : '※大きい端末向け',
               textAlign: TextAlign.start,
               style: const TextStyle(
                 fontSize: 16.0,

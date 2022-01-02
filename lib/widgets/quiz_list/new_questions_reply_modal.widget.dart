@@ -47,7 +47,7 @@ class NewQuestionsReplyModal extends HookWidget {
               style: ElevatedButton.styleFrom(
                 primary: Colors.red.shade600,
                 padding: const EdgeInsets.only(
-                  bottom: 3,
+                  bottom: 2,
                 ),
                 shape: const StadiumBorder(),
                 side: BorderSide(

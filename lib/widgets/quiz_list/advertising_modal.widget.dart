@@ -102,15 +102,13 @@ class AdvertisingModal extends HookWidget {
                       1,
                     );
                     if (rewardedAd.value != null) {
-                      showRewardedAd(
+                      showNewQuestionsRewardedAd(
                         screenContext,
                         rewardedAd,
-                        1,
                       );
                       Navigator.pop(context);
                       Navigator.pop(context);
                     } else {
-                      Navigator.pop(context);
                       Navigator.pop(context);
 
                       AwesomeDialog(

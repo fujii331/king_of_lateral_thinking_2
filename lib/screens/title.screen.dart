@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:king_of_lateral_thinking_2/services/title/first_setting.service.dart';
+import 'package:king_of_lateral_thinking_2/widgets/common/background.widget.dart';
 import 'package:king_of_lateral_thinking_2/widgets/title/another_app_link.widget.dart';
 import 'package:king_of_lateral_thinking_2/widgets/title/title_back.widget.dart';
 import 'package:king_of_lateral_thinking_2/widgets/title/title_button.widget.dart';
@@ -33,6 +34,7 @@ class TitleScreen extends HookWidget {
       resizeToAvoidBottomInset: false,
       body: Stack(
         children: <Widget>[
+          background('title_back.jpg'),
           const TitleBack(),
           Center(
             child: Column(

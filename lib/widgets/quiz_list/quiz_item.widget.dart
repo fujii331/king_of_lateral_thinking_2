@@ -6,6 +6,7 @@ import 'package:king_of_lateral_thinking_2/models/quiz.model.dart';
 import 'package:king_of_lateral_thinking_2/providers/common.provider.dart';
 import 'package:king_of_lateral_thinking_2/providers/player.provider.dart';
 import 'package:king_of_lateral_thinking_2/providers/quiz.provider.dart';
+import 'package:king_of_lateral_thinking_2/screens/quiz_detail_tab.screen.dart';
 
 class QuizItem extends HookWidget {
   final Quiz quiz;
@@ -23,20 +24,25 @@ class QuizItem extends HookWidget {
     if (context.read(playingQuizIdProvider).state != quiz.id) {
       context.read(remainingQuestionsProvider).state = quiz.questions;
       context.read(askedQuestionsProvider).state = [];
-      context.read(hintProvider).state = 0;
-      context.read(subHintFlgProvider).state = false;
+      context.read(hintStatusProvider).state = 0;
+      context.read(subHintOpenedProvider).state = false;
       context.read(selectedQuestionProvider).state = dummyQuestion;
       context.read(playingQuizIdProvider).state = quiz.id;
       context.read(relatedWordCountProvider).state = 0;
       context.read(questionCountProvider).state = 0;
+      context.read(importantQuestionedIdsProvider).state = [];
+      context.read(finalAnswerProvider).state = dummyAnswer;
     }
 
     context.read(replyProvider).state = '';
-    context.read(beforeWordProvider).state = '';
     context.read(displayReplyFlgProvider).state = false;
     context.read(selectedSubjectProvider).state = '';
     context.read(selectedRelatedWordProvider).state = '';
-    context.read(askingQuestionsProvider).state = [];
+
+    if (context.read(hintStatusProvider).state < 2) {
+      context.read(askingQuestionsProvider).state = [];
+      context.read(beforeWordProvider).state = '';
+    }
 
     Navigator.of(context)
         .pushNamed(QuizDetailTabScreen.routeName, arguments: quiz);
