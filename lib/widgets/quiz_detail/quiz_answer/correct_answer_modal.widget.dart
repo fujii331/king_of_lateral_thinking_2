@@ -6,7 +6,7 @@ import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:king_of_lateral_thinking_2/models/analytics.model.dart';
 import 'package:king_of_lateral_thinking_2/providers/common.provider.dart';
 import 'package:king_of_lateral_thinking_2/screens/quiz_list.screen.dart';
-import 'package:king_of_lateral_thinking_2/widgets/quiz_detail/questioned/analytics_modal.widget.dart';
+import 'package:king_of_lateral_thinking_2/widgets/quiz_detail/quiz_answer/analytics_modal.widget.dart';
 
 class CorrectAnswerModal extends HookWidget {
   final String comment;

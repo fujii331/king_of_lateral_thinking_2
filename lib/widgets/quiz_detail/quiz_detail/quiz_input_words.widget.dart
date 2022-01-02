@@ -149,11 +149,25 @@ class QuizInputWords extends HookWidget {
   ) {
     final height = MediaQuery.of(context).size.height * .35;
 
-    return SizedBox(
+    return Container(
       width: MediaQuery.of(context).size.width * .86 > 650
           ? 250
           : MediaQuery.of(context).size.width * .30,
-      height: height < 210 ? 50 : null,
+      height: height < 210 ? 52 : null,
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(16),
+        border: Border.all(
+          color: Colors.blueGrey.shade700,
+        ),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.white54.withOpacity(0.3),
+            blurRadius: 2.0,
+            spreadRadius: 0.1,
+            offset: const Offset(1, 1),
+          )
+        ],
+      ),
       child: TextField(
         textAlignVertical: height < 210 ? TextAlignVertical.bottom : null,
         decoration: InputDecoration(
@@ -214,44 +228,55 @@ class QuizInputWords extends HookWidget {
         border: Border.all(
           color: Colors.blueGrey.shade700,
         ),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.white54.withOpacity(0.4),
+            blurRadius: 4.0,
+            spreadRadius: 0.2,
+            offset: const Offset(1, 1),
+          )
+        ],
       ),
       alignment: Alignment.center,
-      child: DropdownButton(
-        isExpanded: true,
-        hint: Text(
-          displayHint,
-          style: const TextStyle(
-            color: Colors.black54,
+      child: Padding(
+        padding: const EdgeInsets.only(bottom: 2),
+        child: DropdownButton(
+          isExpanded: true,
+          hint: Text(
+            displayHint,
+            style: const TextStyle(
+              color: Colors.black54,
+            ),
           ),
+          underline: Container(
+            color: Colors.white,
+          ),
+          value: selectedWord != '' ? selectedWord : null,
+          items: hintStatus < 2
+              ? wordList.map((String word) {
+                  return DropdownMenuItem(
+                    value: word,
+                    child: Text(word),
+                  );
+                }).toList()
+              : null,
+          onChanged: (targetSubject) {
+            controller.text = context.read(selectedWordProvider).state =
+                targetSubject as String;
+            submitData(
+              context,
+              quiz,
+              remainingQuestions,
+              selectedQuestion,
+              askingQuestions,
+              subjectData,
+              relatedWordData,
+              hintStatus,
+              subjectController.text.trim(),
+              relatedWordController.text.trim(),
+            );
+          },
         ),
-        underline: Container(
-          color: Colors.white,
-        ),
-        value: selectedWord != '' ? selectedWord : null,
-        items: hintStatus < 2
-            ? wordList.map((String word) {
-                return DropdownMenuItem(
-                  value: word,
-                  child: Text(word),
-                );
-              }).toList()
-            : null,
-        onChanged: (targetSubject) {
-          controller.text = context.read(selectedWordProvider).state =
-              targetSubject as String;
-          submitData(
-            context,
-            quiz,
-            remainingQuestions,
-            selectedQuestion,
-            askingQuestions,
-            subjectData,
-            relatedWordData,
-            hintStatus,
-            subjectController.text.trim(),
-            relatedWordController.text.trim(),
-          );
-        },
       ),
     );
   }

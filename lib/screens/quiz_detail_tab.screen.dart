@@ -9,11 +9,11 @@ import 'package:king_of_lateral_thinking_2/providers/common.provider.dart';
 import 'package:king_of_lateral_thinking_2/providers/player.provider.dart';
 import 'package:king_of_lateral_thinking_2/providers/quiz.provider.dart';
 import 'package:king_of_lateral_thinking_2/services/admob/interstitial_action.service.dart';
-import 'package:king_of_lateral_thinking_2/widgets/quiz_detail/answer/quiz_answer.widget.dart';
 import 'package:king_of_lateral_thinking_2/widgets/quiz_detail/hint/hint_modal.widget.dart';
 import 'package:king_of_lateral_thinking_2/widgets/quiz_detail/hint/opened_sub_hint_modal.widget.dart';
 import 'package:king_of_lateral_thinking_2/widgets/quiz_detail/hint/sub_hint_modal.widget.dart';
 import 'package:king_of_lateral_thinking_2/widgets/quiz_detail/questioned/questioned.widget.dart';
+import 'package:king_of_lateral_thinking_2/widgets/quiz_detail/quiz_answer/quiz_answer.widget.dart';
 import 'package:king_of_lateral_thinking_2/widgets/quiz_detail/quiz_detail/quiz_detail.widget.dart';
 
 class QuizDetailTabScreen extends HookWidget {
@@ -164,7 +164,7 @@ class QuizDetailTabScreen extends HookWidget {
         items: <BottomNavigationBarItem>[
           BottomNavigationBarItem(
             icon: const Icon(Icons.chat),
-            label: '問題',
+            label: '質問',
             backgroundColor: Colors.indigo.shade700.withOpacity(0.5),
           ),
           BottomNavigationBarItem(

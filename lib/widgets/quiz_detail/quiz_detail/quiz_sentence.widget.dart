@@ -27,7 +27,7 @@ class QuizSentence extends StatelessWidget {
                 ? 320
                 : height * .40,
         decoration: BoxDecoration(
-          color: Colors.white.withOpacity(0.85),
+          color: Colors.white.withOpacity(0.9),
           borderRadius: BorderRadius.circular(10),
           border: Border.all(
             color: Colors.blueGrey.shade700,
@@ -35,9 +35,9 @@ class QuizSentence extends StatelessWidget {
           ),
           boxShadow: [
             BoxShadow(
-              color: Colors.white54.withOpacity(0.5),
-              blurRadius: 9.0,
-              spreadRadius: 0.6,
+              color: Colors.white54.withOpacity(0.4),
+              blurRadius: 4.0,
+              spreadRadius: 0.3,
               offset: const Offset(2, 2),
             )
           ],

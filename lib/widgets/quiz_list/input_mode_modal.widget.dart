@@ -91,8 +91,8 @@ class InputModeModal extends HookWidget {
             ),
             child: Text(
               alwaysDisplayInput
-                  ? '主語と関連語の入力時、常に入力欄が見えるように調整します。'
-                  : '主語と関連語の入力時、画面のレイアウトをそのまま固定します。',
+                  ? '関連語の入力時、常に入力欄が見えるように調整します。'
+                  : '関連語の入力時、画面のレイアウトをそのまま固定します。',
               style: const TextStyle(
                 fontSize: 18.0,
                 fontFamily: 'SawarabiGothic',

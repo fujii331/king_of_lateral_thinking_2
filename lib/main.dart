@@ -7,6 +7,7 @@ import 'package:king_of_lateral_thinking_2/providers/common.provider.dart';
 import 'package:king_of_lateral_thinking_2/screens/quiz_detail_tab.screen.dart';
 import 'package:king_of_lateral_thinking_2/screens/quiz_list.screen.dart';
 import 'package:king_of_lateral_thinking_2/screens/title.screen.dart';
+import 'package:king_of_lateral_thinking_2/screens/tutorial_page.screen.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 void main() async {
@@ -138,6 +139,8 @@ class MyApp extends HookWidget {
             const QuizListScreen(),
         QuizDetailTabScreen.routeName: (BuildContext context) =>
             const QuizDetailTabScreen(),
+        TutorialPageScreen.routeName: (BuildContext context) =>
+            const TutorialPageScreen(),
       },
       onUnknownRoute: (settings) {
         return MaterialPageRoute(

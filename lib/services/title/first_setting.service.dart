@@ -36,7 +36,7 @@ void firstSetting(BuildContext context) async {
     'sounds/cancel.mp3',
     'sounds/change.mp3',
     'sounds/correct_answer.mp3',
-    'sounds/get_final_answer.mp3',
+    'sounds/got_final_answer.mp3',
     'sounds/hint.mp3',
     'sounds/quiz_button.mp3',
     'sounds/tap.mp3',

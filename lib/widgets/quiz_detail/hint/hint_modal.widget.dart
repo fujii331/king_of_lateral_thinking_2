@@ -78,7 +78,7 @@ class HintModal extends HookWidget {
           const SizedBox(height: 25),
           Text(
             workHintValue == 0
-                ? '主語と関連語を選択肢で選べるようになります。'
+                ? '関連語を選択肢で選べるようになります。'
                 : workHintValue == 1
                     ? '質問を選択肢で選べるようになります。'
                     : workHintValue == 2

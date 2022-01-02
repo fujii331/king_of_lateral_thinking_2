@@ -55,138 +55,119 @@ class QuizItem extends HookWidget {
     final List<String> alreadyAnsweredIds =
         useProvider(alreadyAnsweredIdsProvider).state;
 
-    return Stack(
-      children: [
-        Container(
-          height: 46,
-          alignment: Alignment.center,
-          decoration: BoxDecoration(
-            gradient: LinearGradient(
-              begin: FractionalOffset.topLeft,
-              end: FractionalOffset.bottomRight,
-              colors: [
-                const Color(0xFFFFFFFF),
-                quiz.difficulty == 1
-                    ? const Color.fromARGB(240, 182, 235, 235)
-                    : quiz.difficulty == 2
-                        ? const Color.fromARGB(240, 156, 192, 219)
-                        : quiz.difficulty == 3
-                            ? const Color.fromARGB(240, 218, 151, 164)
-                            : const Color(0xF2FFFFFF),
-                quiz.difficulty == 1
-                    ? const Color.fromARGB(240, 96, 235, 235)
-                    : quiz.difficulty == 2
-                        ? const Color.fromARGB(240, 84, 170, 236)
-                        : quiz.difficulty == 3
-                            ? const Color.fromARGB(240, 252, 96, 127)
-                            : const Color(0xF2FFFFFF),
-              ],
-              stops: const [
-                0.5,
-                0.7,
-                0.9,
-              ],
-            ),
-            color: Colors.white,
-            borderRadius: BorderRadius.circular(8),
-            border: Border.all(
-              color: Colors.black,
-              width: 1,
-            ),
-          ),
-          margin: const EdgeInsets.symmetric(
-            vertical: 8,
-            horizontal: 5,
-          ),
-          child: ListTile(
-            leading: Container(
-              padding: const EdgeInsets.only(bottom: 13, left: 5, right: 5),
-              child: Text(
-                '問' + quiz.id.toString(),
-                style: TextStyle(
-                  fontWeight: FontWeight.bold,
-                  fontSize: 20,
-                  color: Colors.pink.shade700,
-                ),
+    return Padding(
+      padding: const EdgeInsets.only(top: 14),
+      child: Stack(
+        children: [
+          Container(
+            height: 50,
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(10),
+              border: Border.all(
+                color: Colors.blueGrey.shade600,
+                width: 1,
+              ),
+              image: DecorationImage(
+                image: AssetImage('assets/images/list_tile/tile_' +
+                    (quiz.difficulty + 0).toString() +
+                    '.png'),
+                fit: BoxFit.cover,
               ),
             ),
-            title: Container(
-              padding: const EdgeInsets.only(bottom: 13, right: 5),
-              child: Text(
-                quiz.title,
-                style: const TextStyle(
-                  fontSize: 20,
-                ),
-              ),
-            ),
-            trailing: Container(
-              padding: const EdgeInsets.only(
-                bottom: 13,
-              ),
-              width: 70,
-              child: quiz.difficulty == 0
-                  ? Text(
-                      '練習用',
+            child: Material(
+              color: Colors.transparent,
+              child: InkWell(
+                borderRadius: BorderRadius.circular(10),
+                onTap: cannotPlay
+                    ? null
+                    : () {
+                        soundEffect.play(
+                          'sounds/tap.mp3',
+                          isNotification: true,
+                          volume: seVolume,
+                        );
+                        toQuizDetail(context);
+                      },
+                child: ListTile(
+                  leading: Container(
+                    padding:
+                        const EdgeInsets.only(bottom: 11, left: 5, right: 5),
+                    child: Text(
+                      '問' + quiz.id.toString(),
                       style: TextStyle(
-                        fontSize: 18,
-                        color: Colors.orange.shade900,
                         fontWeight: FontWeight.bold,
-                        fontFamily: 'KaiseiOpti',
+                        fontSize: 20,
+                        color: Colors.pink.shade100,
                       ),
-                    )
-                  : Row(
-                      children: [
-                        Icon(
-                          Icons.star,
-                          size: 22,
-                          color: Colors.yellow.shade400,
-                        ),
-                        quiz.difficulty > 1
-                            ? Icon(
-                                Icons.star,
-                                size: 22,
-                                color: Colors.yellow.shade500,
-                              )
-                            : Container(),
-                        quiz.difficulty > 2
-                            ? Icon(
-                                Icons.star,
-                                size: 22,
-                                color: Colors.yellow.shade600,
-                              )
-                            : Container(),
-                      ],
                     ),
-            ),
-            onTap: cannotPlay
-                ? null
-                : () {
-                    soundEffect.play(
-                      'sounds/tap.mp3',
-                      isNotification: true,
-                      volume: seVolume,
-                    );
-                    toQuizDetail(context);
-                  },
-          ),
-        ),
-        alreadyAnsweredIds.contains(quiz.id.toString())
-            ? Container(
-                padding: const EdgeInsets.only(
-                  top: 7,
-                  left: 10,
-                ),
-                child: Text(
-                  'Clear!',
-                  style: TextStyle(
-                    fontSize: 12,
-                    color: Colors.green.shade700,
-                    fontWeight: FontWeight.bold,
+                  ),
+                  title: Container(
+                    padding: const EdgeInsets.only(bottom: 11, right: 5),
+                    child: Text(
+                      quiz.title,
+                      style: TextStyle(
+                        fontSize: 20,
+                        color: Colors.blueGrey.shade100,
+                      ),
+                    ),
+                  ),
+                  trailing: Container(
+                    padding:
+                        EdgeInsets.only(bottom: quiz.difficulty == 0 ? 11 : 9),
+                    width: 70,
+                    child: quiz.difficulty == 0
+                        ? Text(
+                            '練習用',
+                            style: TextStyle(
+                              fontSize: 18,
+                              color: Colors.orange.shade200,
+                              fontWeight: FontWeight.bold,
+                              fontFamily: 'KaiseiOpti',
+                            ),
+                          )
+                        : Row(
+                            children: [
+                              Icon(
+                                Icons.star,
+                                size: 22,
+                                color: Colors.yellow.shade400,
+                              ),
+                              quiz.difficulty > 1
+                                  ? Icon(
+                                      Icons.star,
+                                      size: 22,
+                                      color: Colors.yellow.shade500,
+                                    )
+                                  : Container(),
+                              quiz.difficulty > 2
+                                  ? Icon(
+                                      Icons.star,
+                                      size: 22,
+                                      color: Colors.yellow.shade600,
+                                    )
+                                  : Container(),
+                            ],
+                          ),
                   ),
                 ),
-              )
-            : Container()
-      ],
+              ),
+            ),
+          ),
+          alreadyAnsweredIds.contains(quiz.id.toString())
+              ? Container(
+                  padding: const EdgeInsets.only(left: 5),
+                  child: Text(
+                    'Clear!',
+                    style: TextStyle(
+                      fontSize: 11,
+                      color: Colors.yellow.shade400,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                )
+              : Container()
+        ],
+      ),
     );
   }
 }

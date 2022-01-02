@@ -6,7 +6,9 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:king_of_lateral_thinking_2/providers/common.provider.dart';
 import 'package:king_of_lateral_thinking_2/providers/player.provider.dart';
 import 'package:king_of_lateral_thinking_2/screens/quiz_list.screen.dart';
+import 'package:king_of_lateral_thinking_2/screens/tutorial_page.screen.dart';
 import 'package:king_of_lateral_thinking_2/widgets/title/sound_mode.widget.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class TitleButton extends HookWidget {
   final ValueNotifier<bool> displayFlg;
@@ -99,12 +101,9 @@ class TitleButton extends HookWidget {
                 QuizListScreen.routeName,
               );
             } else {
-              // Navigator.of(context).pushNamed(
-              //   LectureTabScreen.routeName,
-              //   arguments: false,
-              // );
               Navigator.of(context).pushNamed(
-                QuizListScreen.routeName,
+                TutorialPageScreen.routeName,
+                arguments: false,
               );
             }
           } else if (buttonPuttern == 2) {
@@ -133,6 +132,14 @@ class TitleButton extends HookWidget {
             //     'noHintCount': 0,
             //   });
             // }
+            // 問題解放リセット
+            const int openQuizNumber = 6;
+
+            SharedPreferences prefs = await SharedPreferences.getInstance();
+
+            prefs.setInt('openingNumber', openQuizNumber);
+
+            context.read(openingNumberProvider).state = openQuizNumber;
           }
         },
       ),

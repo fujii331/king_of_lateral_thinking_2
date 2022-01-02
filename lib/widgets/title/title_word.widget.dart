@@ -47,8 +47,6 @@ class TitleWord extends HookWidget {
                                 fontSize: 48,
                                 fontFamily: 'YuseiMagic',
                                 foreground: Paint()
-                                  // ..style = PaintingStyle.stroke
-                                  // ..strokeWidth = 2
                                   ..shader = LinearGradient(
                                     colors: <Color>[
                                       Colors.yellow.shade300,

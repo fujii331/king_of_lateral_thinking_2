@@ -5,6 +5,7 @@ import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:audioplayers/audioplayers.dart';
 import 'package:king_of_lateral_thinking_2/providers/common.provider.dart';
 import 'package:king_of_lateral_thinking_2/providers/player.provider.dart';
+import 'package:king_of_lateral_thinking_2/screens/tutorial_page.screen.dart';
 import 'package:king_of_lateral_thinking_2/widgets/common/background.widget.dart';
 import 'package:king_of_lateral_thinking_2/widgets/quiz_list/input_mode_modal.widget.dart';
 import 'package:king_of_lateral_thinking_2/widgets/quiz_list/quiz_list_detail.widget.dart';
@@ -57,10 +58,10 @@ class QuizListScreen extends HookWidget {
                 volume: seVolume,
               );
               if (result == 1) {
-                // Navigator.of(context).pushNamed(
-                //   LectureTabScreen.routeName,
-                //   arguments: true,
-                // );
+                Navigator.of(context).pushNamed(
+                  TutorialPageScreen.routeName,
+                  arguments: true,
+                );
               } else if (result == 2) {
                 AwesomeDialog(
                   context: context,

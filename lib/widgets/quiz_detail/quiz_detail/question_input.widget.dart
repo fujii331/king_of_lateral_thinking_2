@@ -5,6 +5,7 @@ import 'package:audioplayers/audioplayers.dart';
 import 'package:king_of_lateral_thinking_2/models/quiz.model.dart';
 import 'package:king_of_lateral_thinking_2/providers/common.provider.dart';
 import 'package:king_of_lateral_thinking_2/providers/quiz.provider.dart';
+import 'package:king_of_lateral_thinking_2/services/quiz_detail_tab/execute_question.service.dart';
 
 class QuestionInput extends HookWidget {
   final Question selectedQuestion;
@@ -17,72 +18,6 @@ class QuestionInput extends HookWidget {
     required this.askingQuestions,
     required this.quiz,
   }) : super(key: key);
-
-  void _executeQuestion(
-    BuildContext context,
-    List<Question> askingQuestions,
-    Question selectedQuestion,
-    AudioCache soundEffect,
-    double seVolume,
-  ) {
-    context.read(questionCountProvider).state++;
-    context.read(replyProvider).state = selectedQuestion.reply;
-    context.read(displayReplyFlgProvider).state = true;
-    context.read(askedQuestionsProvider).state.add(selectedQuestion);
-    context.read(remainingQuestionsProvider).state = context
-        .read(remainingQuestionsProvider)
-        .state
-        .where((question) => question.id != selectedQuestion.id)
-        .toList();
-
-    context.read(askingQuestionsProvider).state = askingQuestions
-        .where((question) => question.id != selectedQuestion.id)
-        .toList();
-    context.read(beforeWordProvider).state = selectedQuestion.asking;
-    context.read(selectedQuestionProvider).state = dummyQuestion;
-
-    if (selectedQuestion.hint != '') {
-      soundEffect.play(
-        'sounds/change.mp3',
-        isNotification: true,
-        volume: seVolume,
-      );
-    } else {
-      soundEffect.play(
-        'sounds/quiz_button.mp3',
-        isNotification: true,
-        volume: seVolume,
-      );
-    }
-
-    // 正解を導く質問を行い、まだ回答がセットされていない場合判定実行
-    if (quiz.correctAnswerQuestionIds.contains(selectedQuestion.id) &&
-        context.read(finalAnswerProvider).state.id == 0) {
-      // 重要な質問リストに追加
-      List<int> importantQuestionedIds =
-          context.read(importantQuestionedIdsProvider).state;
-
-      importantQuestionedIds.add(selectedQuestion.id);
-      context.read(importantQuestionedIdsProvider).state =
-          importantQuestionedIds;
-
-      for (Answer answer in quiz.answers) {
-        bool judgeFlg = true;
-
-        for (int questionId in answer.questionIds) {
-          if (!importantQuestionedIds.contains(questionId)) {
-            judgeFlg = false;
-            break;
-          }
-        }
-
-        if (judgeFlg) {
-          context.read(finalAnswerProvider).state = answer;
-          break;
-        }
-      }
-    }
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -118,6 +53,14 @@ class QuestionInput extends HookWidget {
                 border: Border.all(
                   color: Colors.blueGrey.shade700,
                 ),
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.white54.withOpacity(0.4),
+                    blurRadius: 4.0,
+                    spreadRadius: 0.2,
+                    offset: const Offset(1, 1),
+                  )
+                ],
               ),
               child: DropdownButton(
                 isExpanded: true,
@@ -170,12 +113,13 @@ class QuestionInput extends HookWidget {
                 ),
                 onPressed: selectedQuestion.id != 0
                     ? () {
-                        _executeQuestion(
+                        executeQuestion(
                           context,
                           askingQuestions,
                           selectedQuestion,
                           soundEffect,
                           seVolume,
+                          quiz,
                         );
                       }
                     : () {},
