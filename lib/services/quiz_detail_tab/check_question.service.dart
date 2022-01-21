@@ -17,16 +17,17 @@ void checkQuestions(
 ) {
   // 質問文のうち、関連語が含まれていて、関連語から始まっていない質問を抽出
   final List<Question> includeRelatedWordQuestions = remainingQuestions
-      .where((question) =>
-          !question.asking.startsWith(relatedWord) &&
-          question.asking.contains(relatedWord))
+      .where((question) => question.asking
+          // 主語以外で判定
+          .substring(question.asking.indexOf('は') + 1)
+          .contains(relatedWord))
       .toList();
 
   // 対象の関連語では質問が見つからなかった場合
-  // 質問が10個以上見つかった場合
+  // 質問が7個以上見つかった場合
   // 使用禁止用語を使っていた場合
   if (includeRelatedWordQuestions.isEmpty ||
-      includeRelatedWordQuestions.length > 10 ||
+      includeRelatedWordQuestions.length > 5 ||
       restrictionWords.contains(relatedWord)) {
     // 選択した主語から始まる質問を抽出
     final enableQuestionsCount = remainingQuestions
@@ -111,8 +112,7 @@ void submitData(
           .push()
           .set(
         {
-          // サブヒント使用しているか
-          'subHintOpened': context.read(subHintOpenedProvider).state,
+          'time': DateTime.now().toString(),
         },
       );
     }

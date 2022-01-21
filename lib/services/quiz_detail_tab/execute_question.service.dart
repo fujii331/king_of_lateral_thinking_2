@@ -15,7 +15,6 @@ void executeQuestion(
   context.read(questionCountProvider).state++;
   context.read(replyProvider).state = selectedQuestion.reply;
   context.read(displayReplyFlgProvider).state = true;
-  context.read(askedQuestionsProvider).state.add(selectedQuestion);
   context.read(remainingQuestionsProvider).state = context
       .read(remainingQuestionsProvider)
       .state
@@ -70,6 +69,14 @@ void executeQuestion(
         isNotification: true,
         volume: seVolume,
       );
+      if (context.read(finalAnswerProvider).state.questionIds.length > 1) {
+        selectedQuestion = Question(
+          id: selectedQuestion.id,
+          asking: selectedQuestion.asking,
+          reply: selectedQuestion.reply,
+          hint: 'ピンポイントの質問ですね。',
+        );
+      }
     } else {
       soundEffect.play(
         'sounds/change.mp3',
@@ -78,4 +85,6 @@ void executeQuestion(
       );
     }
   }
+
+  context.read(askedQuestionsProvider).state.add(selectedQuestion);
 }

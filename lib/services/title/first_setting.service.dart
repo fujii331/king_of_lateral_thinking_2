@@ -8,7 +8,7 @@ void firstSetting(BuildContext context) async {
   SharedPreferences prefs = await SharedPreferences.getInstance();
 
   context.read(openingNumberProvider).state =
-      prefs.getInt('openingNumber') ?? 9;
+      prefs.getInt('openingNumber') ?? 6;
 
   // 音量設定
   final double? bgmVolume = prefs.getDouble('bgmVolume');

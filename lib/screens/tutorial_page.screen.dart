@@ -91,7 +91,7 @@ class TutorialPageScreen extends HookWidget {
       ),
       body: Stack(
         children: <Widget>[
-          background('quiz_list_background.jpg'),
+          background('lecture_back.png'),
           Column(
             crossAxisAlignment: CrossAxisAlignment.end,
             children: <Widget>[
