@@ -4,7 +4,6 @@ import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:king_of_lateral_thinking_2/providers/common.provider.dart';
-import 'package:king_of_lateral_thinking_2/screens/quiz_detail_tab.screen.dart';
 import 'package:king_of_lateral_thinking_2/screens/quiz_list.screen.dart';
 import 'package:king_of_lateral_thinking_2/screens/title.screen.dart';
 import 'package:king_of_lateral_thinking_2/screens/tutorial_page.screen.dart';
@@ -137,8 +136,8 @@ class MyApp extends HookWidget {
         '/': (BuildContext context) => const TitleScreen(),
         QuizListScreen.routeName: (BuildContext context) =>
             const QuizListScreen(),
-        QuizDetailTabScreen.routeName: (BuildContext context) =>
-            const QuizDetailTabScreen(),
+        // QuizDetailTabScreen.routeName: (BuildContext context) =>
+        //     const QuizDetailTabScreen(),
         TutorialPageScreen.routeName: (BuildContext context) =>
             const TutorialPageScreen(),
       },

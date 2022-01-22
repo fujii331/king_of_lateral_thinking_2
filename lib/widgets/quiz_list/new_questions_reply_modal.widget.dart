@@ -21,7 +21,7 @@ class NewQuestionsReplyModal extends HookWidget {
       padding: const EdgeInsets.only(
         left: 20,
         right: 20,
-        bottom: 15,
+        bottom: 25,
       ),
       child: Column(
         mainAxisSize: MainAxisSize.min,

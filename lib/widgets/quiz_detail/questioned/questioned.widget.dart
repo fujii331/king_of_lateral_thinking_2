@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
@@ -24,9 +26,9 @@ class Questioned extends HookWidget {
         background('question_list_back.jpg'),
         Center(
           child: Container(
-            padding: const EdgeInsets.only(
-              top: 93,
-              bottom: 15,
+            padding: EdgeInsets.only(
+              top: Platform.isAndroid ? 93 : 115,
+              bottom: Platform.isAndroid ? 15 : 20,
               right: 25,
               left: 25,
             ),

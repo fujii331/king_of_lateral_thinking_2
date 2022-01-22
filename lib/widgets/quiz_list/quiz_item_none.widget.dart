@@ -11,11 +11,13 @@ class QuizItemNone extends HookWidget {
 
   @override
   Widget build(BuildContext context) {
+    final double height = MediaQuery.of(context).size.height;
+    final bool heightOk = height > 580;
+
     return Padding(
-      padding: const EdgeInsets.only(top: 14),
+      padding: EdgeInsets.only(top: heightOk ? 14 : 9),
       child: Container(
         height: 50,
-        alignment: Alignment.center,
         decoration: BoxDecoration(
           color: Colors.grey.shade800,
           borderRadius: BorderRadius.circular(10),
@@ -26,23 +28,30 @@ class QuizItemNone extends HookWidget {
         ),
         child: ListTile(
           leading: Container(
-            padding: const EdgeInsets.only(bottom: 11, left: 5, right: 5),
+            padding: EdgeInsets.only(
+              bottom: 11,
+              left: heightOk ? 5 : 0,
+              right: heightOk ? 5 : 0,
+            ),
             child: Text(
               '問' + quizNum.toString(),
-              style: const TextStyle(
+              style: TextStyle(
                 fontWeight: FontWeight.bold,
-                fontSize: 20,
+                fontSize: heightOk ? 20 : 18,
                 color: Colors.white60,
               ),
             ),
           ),
           title: Container(
-            padding: const EdgeInsets.only(bottom: 11, right: 5),
-            child: const Text(
+            padding: EdgeInsets.only(
+              bottom: 11,
+              right: heightOk ? 5 : 0,
+            ),
+            child: Text(
               '問題準備中！',
               style: TextStyle(
                 color: Colors.white60,
-                fontSize: 20,
+                fontSize: heightOk ? 20 : 18,
               ),
             ),
           ),

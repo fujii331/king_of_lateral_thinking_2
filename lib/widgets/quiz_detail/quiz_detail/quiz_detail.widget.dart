@@ -45,7 +45,7 @@ class QuizDetail extends HookWidget {
                   decoration: const BoxDecoration(
                     image: DecorationImage(
                       image:
-                          AssetImage('assets/images/background/back_grey.png'),
+                          AssetImage('assets/images/background/back_neby.png'),
                       fit: BoxFit.cover,
                     ),
                   ),
@@ -55,7 +55,7 @@ class QuizDetail extends HookWidget {
             child: SingleChildScrollView(
               child: Padding(
                 padding: const EdgeInsets.only(
-                  top: 80,
+                  top: 85,
                   bottom: 16,
                   right: 16,
                   left: 16,

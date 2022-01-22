@@ -14,7 +14,7 @@ class OpenedSubHintModal extends HookWidget {
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.only(
-        top: 10,
+        top: 15,
         left: 20,
         right: 20,
         bottom: 20,

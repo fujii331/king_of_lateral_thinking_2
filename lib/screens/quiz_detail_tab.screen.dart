@@ -19,12 +19,19 @@ import 'package:king_of_lateral_thinking_2/widgets/quiz_detail/quiz_detail/quiz_
 class QuizDetailTabScreen extends HookWidget {
   static const routeName = '/quiz-detail-tab';
 
-  const QuizDetailTabScreen({Key? key}) : super(key: key);
+  final Quiz quiz;
+
+  const QuizDetailTabScreen({
+    Key? key,
+    required this.quiz,
+  }) : super(key: key);
+
+  // const QuizDetailTabScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     final AudioCache soundEffect = useProvider(soundEffectProvider).state;
-    final Quiz quiz = ModalRoute.of(context)?.settings.arguments as Quiz;
+    // final Quiz quiz = ModalRoute.of(context)?.settings.arguments as Quiz;
 
     final screenNo = useState<int>(0);
     final pageController = usePageController(initialPage: 0, keepPage: true);

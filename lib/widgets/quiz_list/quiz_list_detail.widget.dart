@@ -37,8 +37,11 @@ class QuizListDetail extends HookWidget {
         ? 360
         : MediaQuery.of(context).size.width * 0.9;
 
+    final double height = MediaQuery.of(context).size.height;
+    final bool heightOk = height > 580;
+
     return Container(
-      height: 465,
+      height: heightOk ? 465 : 420,
       width: width,
       margin: const EdgeInsets.symmetric(
         vertical: 5,
@@ -47,6 +50,9 @@ class QuizListDetail extends HookWidget {
       child: Stack(
         children: [
           ListView.builder(
+            padding: EdgeInsets.only(
+              top: heightOk ? 80 : 60,
+            ),
             itemBuilder: (ctx, index) {
               int quizNumber = index + 6 * (screenNo.value);
               return quizNumber < openingNumber
@@ -71,9 +77,15 @@ class QuizListDetail extends HookWidget {
           screenNo.value + 1 == numOfPages && openingNumber != quizData.length
               ? Container(
                   margin: EdgeInsets.only(
-                    top: openingNumber % 6 == 0 ? 93 : 275,
+                    top: openingNumber % 6 == 0
+                        ? heightOk
+                            ? 93
+                            : 69
+                        : heightOk
+                            ? 285
+                            : 246,
                   ),
-                  height: 180,
+                  height: heightOk ? 179 : 168,
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(10),
                     border: Border.all(
@@ -127,7 +139,7 @@ class QuizListDetail extends HookWidget {
                           child: allQuizCleared
                               ? Container(
                                   alignment: Alignment.center,
-                                  height: 465,
+                                  height: 205,
                                   child: Stack(
                                     children: <Widget>[
                                       Text(
@@ -166,7 +178,7 @@ class QuizListDetail extends HookWidget {
                               ),
                               child: Container(
                                 alignment: Alignment.center,
-                                height: 465,
+                                height: 205,
                                 child: Stack(
                                   children: <Widget>[
                                     Text(

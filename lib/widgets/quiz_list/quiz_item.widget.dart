@@ -20,6 +20,7 @@ class QuizItem extends HookWidget {
 
   void toQuizDetail(
     BuildContext context,
+    ValueNotifier<bool> updateFlg,
   ) {
     if (context.read(playingQuizIdProvider).state != quiz.id) {
       context.read(remainingQuestionsProvider).state = quiz.questions;
@@ -44,8 +45,27 @@ class QuizItem extends HookWidget {
       context.read(beforeWordProvider).state = '';
     }
 
-    Navigator.of(context)
-        .pushNamed(QuizDetailTabScreen.routeName, arguments: quiz);
+    // Navigator.of(context)
+    //     .pushNamed(QuizDetailTabScreen.routeName, arguments: quiz);
+    pushWithReloadByReturn(context, updateFlg);
+  }
+
+  void pushWithReloadByReturn(
+    BuildContext context,
+    ValueNotifier<bool> updateFlg,
+  ) async {
+    final result = await Navigator.push(
+      context,
+      MaterialPageRoute<bool>(
+        builder: (BuildContext context) => QuizDetailTabScreen(
+          quiz: quiz,
+        ),
+      ),
+    );
+
+    if (result != null && result) {
+      updateFlg.value = !updateFlg.value;
+    }
   }
 
   @override
@@ -55,8 +75,13 @@ class QuizItem extends HookWidget {
     final List<String> alreadyAnsweredIds =
         useProvider(alreadyAnsweredIdsProvider).state;
 
+    final double height = MediaQuery.of(context).size.height;
+    final bool heightOk = height > 580;
+
+    final ValueNotifier<bool> updateFlg = useState(false);
+
     return Padding(
-      padding: const EdgeInsets.only(top: 14),
+      padding: EdgeInsets.only(top: heightOk ? 14 : 9),
       child: Stack(
         children: [
           Container(
@@ -86,27 +111,36 @@ class QuizItem extends HookWidget {
                           isNotification: true,
                           volume: seVolume,
                         );
-                        toQuizDetail(context);
+                        toQuizDetail(
+                          context,
+                          updateFlg,
+                        );
                       },
                 child: ListTile(
                   leading: Container(
-                    padding:
-                        const EdgeInsets.only(bottom: 11, left: 5, right: 5),
+                    padding: EdgeInsets.only(
+                      bottom: 11,
+                      left: heightOk ? 5 : 0,
+                      right: heightOk ? 5 : 0,
+                    ),
                     child: Text(
                       '問' + quiz.id.toString(),
                       style: TextStyle(
                         fontWeight: FontWeight.bold,
-                        fontSize: 20,
+                        fontSize: heightOk ? 20 : 18,
                         color: Colors.pink.shade100,
                       ),
                     ),
                   ),
                   title: Container(
-                    padding: const EdgeInsets.only(bottom: 11, right: 5),
+                    padding: EdgeInsets.only(
+                      bottom: 11,
+                      right: heightOk ? 5 : 0,
+                    ),
                     child: Text(
                       quiz.title,
                       style: TextStyle(
-                        fontSize: 20,
+                        fontSize: heightOk ? 20 : 18,
                         color: Colors.blueGrey.shade100,
                       ),
                     ),

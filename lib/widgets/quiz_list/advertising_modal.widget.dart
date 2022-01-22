@@ -8,6 +8,7 @@ import 'package:king_of_lateral_thinking_2/providers/common.provider.dart';
 import 'package:king_of_lateral_thinking_2/services/admob/reward_action.service.dart';
 import 'package:king_of_lateral_thinking_2/widgets/common/comment_modal.widget.dart';
 import 'package:king_of_lateral_thinking_2/widgets/common/loading_modal.widget.dart';
+import 'package:king_of_lateral_thinking_2/widgets/common/modal_do_not_watch_button.widget.dart';
 
 class AdvertisingModal extends HookWidget {
   final int quizId;
@@ -30,7 +31,7 @@ class AdvertisingModal extends HookWidget {
       padding: const EdgeInsets.only(
         left: 20,
         right: 20,
-        bottom: 15,
+        bottom: 25,
       ),
       child: Column(
         mainAxisSize: MainAxisSize.min,
@@ -47,39 +48,25 @@ class AdvertisingModal extends HookWidget {
               ),
             ),
           ),
-          Padding(
-            padding: const EdgeInsets.symmetric(
-              vertical: 10,
-              horizontal: 15,
-            ),
-            child: Wrap(
-              children: [
-                ElevatedButton(
-                  child: const Text('見ない'),
-                  style: ElevatedButton.styleFrom(
-                    primary: Colors.red[500],
-                    textStyle: Theme.of(context).textTheme.button,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(10),
-                    ),
-                  ),
-                  onPressed: () => {
-                    soundEffect.play(
-                      'sounds/cancel.mp3',
-                      isNotification: true,
-                      volume: seVolume,
-                    ),
-                    Navigator.pop(context)
-                  },
-                ),
-                const SizedBox(width: 30),
-                ElevatedButton(
+          const SizedBox(height: 15),
+          Wrap(
+            children: [
+              const ModalDoNotWatchButton(),
+              const SizedBox(width: 30),
+              SizedBox(
+                width: 70,
+                height: 40,
+                child: ElevatedButton(
                   child: const Text('見る'),
                   style: ElevatedButton.styleFrom(
-                    primary: Colors.blue.shade700,
-                    textStyle: Theme.of(context).textTheme.button,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(10),
+                    primary: Colors.blue.shade600,
+                    padding: const EdgeInsets.only(
+                      bottom: 2,
+                    ),
+                    shape: const StadiumBorder(),
+                    side: BorderSide(
+                      width: 2,
+                      color: Colors.blue.shade700,
                     ),
                   ),
                   onPressed: () async {
@@ -131,8 +118,8 @@ class AdvertisingModal extends HookWidget {
                     }
                   },
                 ),
-              ],
-            ),
+              ),
+            ],
           ),
         ],
       ),
