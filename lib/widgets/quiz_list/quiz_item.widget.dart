@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
@@ -11,11 +13,13 @@ import 'package:king_of_lateral_thinking_2/screens/quiz_detail_tab.screen.dart';
 class QuizItem extends HookWidget {
   final Quiz quiz;
   final bool cannotPlay;
+  final ValueNotifier<bool> updateFlgState;
 
   const QuizItem({
     Key? key,
     required this.quiz,
     required this.cannotPlay,
+    required this.updateFlgState,
   }) : super(key: key);
 
   void toQuizDetail(
@@ -47,12 +51,12 @@ class QuizItem extends HookWidget {
 
     // Navigator.of(context)
     //     .pushNamed(QuizDetailTabScreen.routeName, arguments: quiz);
-    pushWithReloadByReturn(context, updateFlg);
+    pushWithReloadByReturn(context, updateFlgState);
   }
 
   void pushWithReloadByReturn(
     BuildContext context,
-    ValueNotifier<bool> updateFlg,
+    ValueNotifier<bool> updateFlgState,
   ) async {
     final result = await Navigator.push(
       context,
@@ -64,7 +68,7 @@ class QuizItem extends HookWidget {
     );
 
     if (result != null && result) {
-      updateFlg.value = !updateFlg.value;
+      updateFlgState.value = !updateFlgState.value;
     }
   }
 
@@ -77,8 +81,6 @@ class QuizItem extends HookWidget {
 
     final double height = MediaQuery.of(context).size.height;
     final bool heightOk = height > 580;
-
-    final ValueNotifier<bool> updateFlg = useState(false);
 
     return Padding(
       padding: EdgeInsets.only(top: heightOk ? 14 : 9),
@@ -113,13 +115,13 @@ class QuizItem extends HookWidget {
                         );
                         toQuizDetail(
                           context,
-                          updateFlg,
+                          updateFlgState,
                         );
                       },
                 child: ListTile(
                   leading: Container(
                     padding: EdgeInsets.only(
-                      bottom: 11,
+                      bottom: Platform.isAndroid ? 11 : 8,
                       left: heightOk ? 5 : 0,
                       right: heightOk ? 5 : 0,
                     ),
@@ -134,7 +136,7 @@ class QuizItem extends HookWidget {
                   ),
                   title: Container(
                     padding: EdgeInsets.only(
-                      bottom: 11,
+                      bottom: Platform.isAndroid ? 11 : 8,
                       right: heightOk ? 5 : 0,
                     ),
                     child: Text(

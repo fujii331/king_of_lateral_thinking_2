@@ -96,6 +96,7 @@ class QuizListScreen extends HookWidget {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               const SizedBox(height: 20),
+              const Spacer(),
               QuizListDetail(
                 openingNumber: openingNumber,
                 screenNo: screenNo,

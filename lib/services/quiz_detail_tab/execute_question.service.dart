@@ -79,7 +79,7 @@ void executeQuestion(
       }
     } else {
       soundEffect.play(
-        'sounds/change.mp3',
+        'sounds/nice_question.mp3',
         isNotification: true,
         volume: seVolume,
       );

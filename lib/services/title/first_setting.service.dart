@@ -38,9 +38,9 @@ void firstSetting(BuildContext context) async {
     'sounds/correct_answer.mp3',
     'sounds/got_final_answer.mp3',
     'sounds/hint.mp3',
+    'sounds/nice_question.mp3',
     'sounds/quiz_button.mp3',
     'sounds/tap.mp3',
-    'sounds/think.mp3',
   ]);
 
   // 遊び方に誘導するかの判定

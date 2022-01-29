@@ -40,6 +40,8 @@ class QuizListDetail extends HookWidget {
     final double height = MediaQuery.of(context).size.height;
     final bool heightOk = height > 580;
 
+    final ValueNotifier<bool> updateFlgState = useState(false);
+
     return Container(
       height: heightOk ? 465 : 420,
       width: width,
@@ -59,11 +61,13 @@ class QuizListDetail extends HookWidget {
                   ? QuizItem(
                       quiz: quizData[quizNumber],
                       cannotPlay: false,
+                      updateFlgState: updateFlgState,
                     )
                   : openingNumber < quizData.length
                       ? QuizItem(
                           quiz: quizData[quizNumber],
                           cannotPlay: true,
+                          updateFlgState: updateFlgState,
                         )
                       : quizNumber == quizData.length
                           ? QuizItemNone(quizNum: openingNumber + 1)

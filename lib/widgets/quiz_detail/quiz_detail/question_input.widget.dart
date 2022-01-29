@@ -38,7 +38,7 @@ class QuestionInput extends HookWidget {
             Container(
               padding: EdgeInsets.only(
                 top: height < 220 ? 4 : 7,
-                bottom: height < 220 ? 5 : 7,
+                bottom: height < 220 ? 5 : 6,
                 right: 10,
                 left: 10,
               ),
