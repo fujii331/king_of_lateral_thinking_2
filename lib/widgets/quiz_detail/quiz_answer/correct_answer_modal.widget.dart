@@ -24,7 +24,7 @@ class CorrectAnswerModal extends HookWidget {
 
     return Padding(
       padding: EdgeInsets.symmetric(
-        horizontal: MediaQuery.of(context).size.width * .86 > 700 ? 150 : 0,
+        horizontal: MediaQuery.of(context).size.width * .86 > 550 ? 30 : 0,
       ),
       child: Padding(
         padding: const EdgeInsets.only(
@@ -87,10 +87,6 @@ class CorrectAnswerModal extends HookWidget {
                       );
                       Navigator.pop(context);
                       Navigator.pop(context, true);
-                      // Navigator.popUntil(
-                      //   context,
-                      //   ModalRoute.withName(QuizListScreen.routeName,),
-                      // );
                     },
                   ),
                 ),
@@ -125,8 +121,8 @@ class CorrectAnswerModal extends HookWidget {
                               headerAnimationLoop: false,
                               animType: AnimType.SCALE,
                               width:
-                                  MediaQuery.of(context).size.width * .86 > 650
-                                      ? 650
+                                  MediaQuery.of(context).size.width * .86 > 550
+                                      ? 550
                                       : null,
                               body: AnalyticsModal(
                                 data: data!,

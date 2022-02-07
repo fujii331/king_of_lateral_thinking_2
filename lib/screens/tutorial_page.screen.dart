@@ -76,7 +76,7 @@ class TutorialPageScreen extends HookWidget {
                       isNotification: true,
                       volume: seVolume,
                     );
-                    context.read(alreadyPlayedQuizFlgProvider).state = true;
+                    context.read(alreadyPlayedQuizProvider).state = true;
                     prefs.setBool('alreadyPlayedQuiz', true);
                     Navigator.of(context).pushReplacementNamed(
                       QuizListScreen.routeName,

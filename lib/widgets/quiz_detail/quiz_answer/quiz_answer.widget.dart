@@ -27,7 +27,9 @@ class QuizAnswer extends HookWidget {
     final double seVolume = useProvider(seVolumeProvider).state;
 
     final Answer finalAnswer = useProvider(finalAnswerProvider).state;
-    final ValueNotifier<bool> enableAnswerButtonState = useState<bool>(true);
+
+    final ValueNotifier<bool> enableAnswerButtonState =
+        useState<bool>(finalAnswer.id != 0);
     final List<String> alreadyAnsweredIds =
         useProvider(alreadyAnsweredIdsProvider).state;
 
@@ -56,8 +58,10 @@ class QuizAnswer extends HookWidget {
                 ),
                 const SizedBox(height: 20),
                 Container(
-                  width: MediaQuery.of(context).size.width * .75,
-                  height: 120,
+                  width: MediaQuery.of(context).size.width * .75 > 550
+                      ? 550
+                      : MediaQuery.of(context).size.width * .75,
+                  height: 135,
                   decoration: BoxDecoration(
                     color: Colors.white.withOpacity(0.90),
                     borderRadius: BorderRadius.circular(10),

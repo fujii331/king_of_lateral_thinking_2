@@ -46,7 +46,7 @@ class LectureLast extends HookWidget {
                       ),
                     ),
                     const Text(
-                      '・一問目はヒントが使い放題なので、練習と思ってやってみましょう。\n\n・関連語の入力時に入力内容が隠れてしまう場合、問題一覧右上のメニューボタンから「入力時設定」を押して設定を変更してみて下さい。\n',
+                      '・一問目はヒントが使い放題なので、練習と思ってやってみましょう。\n',
                       style: TextStyle(
                         fontSize: 18.0,
                         color: Colors.yellow,
@@ -94,7 +94,7 @@ class LectureLast extends HookWidget {
                                         volume: seVolume,
                                       );
                                       context
-                                          .read(alreadyPlayedQuizFlgProvider)
+                                          .read(alreadyPlayedQuizProvider)
                                           .state = true;
                                       prefs.setBool('alreadyPlayedQuiz', true);
                                       Navigator.of(context)

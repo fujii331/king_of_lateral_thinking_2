@@ -39,6 +39,7 @@ class QuizItemNone extends HookWidget {
                 fontWeight: FontWeight.bold,
                 fontSize: heightOk ? 20 : 18,
                 color: Colors.white60,
+                fontFamily: 'KaiseiOpti',
               ),
             ),
           ),
@@ -52,6 +53,7 @@ class QuizItemNone extends HookWidget {
               style: TextStyle(
                 color: Colors.white60,
                 fontSize: heightOk ? 20 : 18,
+                fontFamily: 'KaiseiOpti',
               ),
             ),
           ),

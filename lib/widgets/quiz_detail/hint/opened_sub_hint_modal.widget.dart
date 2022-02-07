@@ -59,8 +59,8 @@ class OpenedSubHintModal extends HookWidget {
           ),
         ),
         SizedBox(
-          width: MediaQuery.of(context).size.width * .86 > 650
-              ? 470
+          width: MediaQuery.of(context).size.width * .86 > 550
+              ? 380
               : MediaQuery.of(context).size.width * .50,
           child: Text(
             subHintText,

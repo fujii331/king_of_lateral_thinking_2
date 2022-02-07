@@ -131,6 +131,7 @@ class QuizItem extends HookWidget {
                         fontWeight: FontWeight.bold,
                         fontSize: heightOk ? 20 : 18,
                         color: Colors.pink.shade100,
+                        fontFamily: 'KaiseiOpti',
                       ),
                     ),
                   ),
@@ -144,6 +145,7 @@ class QuizItem extends HookWidget {
                       style: TextStyle(
                         fontSize: heightOk ? 20 : 18,
                         color: Colors.blueGrey.shade100,
+                        fontFamily: 'KaiseiOpti',
                       ),
                     ),
                   ),

@@ -62,6 +62,8 @@ Future<Analytics?> getAnalyticsData(
         questionCountAll:
             noHintCount == 0 ? 0 : (questionCount / noHintCount).round(),
         questionCountYou: questionCountValue,
+        userCount: userCount,
+        noHintCount: noHintCount,
       );
 
       if (clearedFirst) {

@@ -4,6 +4,9 @@ import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:king_of_lateral_thinking_2/providers/common.provider.dart';
+import 'package:king_of_lateral_thinking_2/screens/ogiri_detail_tab.screen.dart';
+import 'package:king_of_lateral_thinking_2/screens/ogiri_list_tab.screen.dart';
+import 'package:king_of_lateral_thinking_2/screens/ogiri_tutorial.screen.dart';
 import 'package:king_of_lateral_thinking_2/screens/quiz_list.screen.dart';
 import 'package:king_of_lateral_thinking_2/screens/title.screen.dart';
 import 'package:king_of_lateral_thinking_2/screens/tutorial_page.screen.dart';
@@ -140,6 +143,12 @@ class MyApp extends HookWidget {
         //     const QuizDetailTabScreen(),
         TutorialPageScreen.routeName: (BuildContext context) =>
             const TutorialPageScreen(),
+        OgiriListTabScreen.routeName: (BuildContext context) =>
+            const OgiriListTabScreen(),
+        OgiriDetailTabScreen.routeName: (BuildContext context) =>
+            const OgiriDetailTabScreen(),
+        OgiriTutorialScreen.routeName: (BuildContext context) =>
+            const OgiriTutorialScreen(),
       },
       onUnknownRoute: (settings) {
         return MaterialPageRoute(

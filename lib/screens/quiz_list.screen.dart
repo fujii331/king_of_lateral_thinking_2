@@ -1,13 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:audioplayers/audioplayers.dart';
 import 'package:king_of_lateral_thinking_2/providers/common.provider.dart';
 import 'package:king_of_lateral_thinking_2/providers/player.provider.dart';
 import 'package:king_of_lateral_thinking_2/screens/tutorial_page.screen.dart';
 import 'package:king_of_lateral_thinking_2/widgets/common/background.widget.dart';
-import 'package:king_of_lateral_thinking_2/widgets/quiz_list/input_mode_modal.widget.dart';
 import 'package:king_of_lateral_thinking_2/widgets/quiz_list/quiz_list_detail.widget.dart';
 import 'package:king_of_lateral_thinking_2/widgets/quiz_list/quiz_list_pagination.widget.dart';
 
@@ -43,49 +41,25 @@ class QuizListScreen extends HookWidget {
         centerTitle: true,
         backgroundColor: Colors.blueGrey.shade800.withOpacity(0.6),
         actions: <Widget>[
-          PopupMenuButton<int>(
-            elevation: 20,
-            shape: const OutlineInputBorder(
-              borderSide: BorderSide(
-                color: Colors.blueGrey,
-                width: 2,
-              ),
+          IconButton(
+            iconSize: 28,
+            icon: Icon(
+              Icons.help,
+              color: Colors.grey.shade100,
+              size: 27,
             ),
-            onSelected: (int result) {
+            onPressed: () {
               soundEffect.play(
                 'sounds/tap.mp3',
                 isNotification: true,
                 volume: seVolume,
               );
-              if (result == 1) {
-                Navigator.of(context).pushNamed(
-                  TutorialPageScreen.routeName,
-                  arguments: true,
-                );
-              } else if (result == 2) {
-                AwesomeDialog(
-                  context: context,
-                  dialogType: DialogType.NO_HEADER,
-                  headerAnimationLoop: false,
-                  animType: AnimType.SCALE,
-                  width: MediaQuery.of(context).size.width * .86 > 650
-                      ? 650
-                      : null,
-                  body: const InputModeModal(),
-                ).show();
-              }
+              Navigator.of(context).pushNamed(
+                TutorialPageScreen.routeName,
+                arguments: true,
+              );
             },
-            itemBuilder: (BuildContext context) => <PopupMenuEntry<int>>[
-              const PopupMenuItem<int>(
-                value: 1,
-                child: Text('遊び方'),
-              ),
-              const PopupMenuItem<int>(
-                value: 2,
-                child: Text('入力時設定'),
-              ),
-            ],
-          )
+          ),
         ],
       ),
       extendBodyBehindAppBar: true,

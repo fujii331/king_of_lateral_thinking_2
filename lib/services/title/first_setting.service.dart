@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:king_of_lateral_thinking_2/data/ogiri_data.dart';
+import 'package:king_of_lateral_thinking_2/models/ogiri.model.dart';
 import 'package:king_of_lateral_thinking_2/providers/common.provider.dart';
 import 'package:king_of_lateral_thinking_2/providers/player.provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:intl/intl.dart';
 
 void firstSetting(BuildContext context) async {
   SharedPreferences prefs = await SharedPreferences.getInstance();
@@ -13,7 +16,6 @@ void firstSetting(BuildContext context) async {
   // 音量設定
   final double? bgmVolume = prefs.getDouble('bgmVolume');
   final double? seVolume = prefs.getDouble('seVolume');
-  final bool alreadyPlayeFlg = prefs.getInt('openingNumber') != null;
 
   if (bgmVolume != null) {
     context.read(bgmVolumeProvider).state = bgmVolume;
@@ -46,13 +48,19 @@ void firstSetting(BuildContext context) async {
   // 遊び方に誘導するかの判定
   final bool? alreadyPlayedQuiz = prefs.getBool('alreadyPlayedQuiz');
 
-  if (alreadyPlayedQuiz != null || alreadyPlayeFlg) {
-    context.read(alreadyPlayedQuizFlgProvider).state = true;
+  if (alreadyPlayedQuiz != null) {
+    context.read(alreadyPlayedQuizProvider).state = true;
   }
 
-  // 入力時設定
-  context.read(alwaysDisplayInputProvider).state =
-      prefs.getBool('alwaysDisplayInput') ?? false;
+  final bool? alreadyPlayedOgiri = prefs.getBool('alreadyPlayedOgiri');
+
+  if (alreadyPlayedOgiri != null) {
+    context.read(alreadyPlayedOgiriProvider).state = true;
+  }
+
+  // 大喜利閲覧可否
+  context.read(enableBrowseOgiriListProvider).state =
+      prefs.getStringList('enableBrowseOgiriList') ?? [];
 
   // 正解済みの問題を設定
   if (prefs.getStringList('alreadyAnsweredIds') == null) {
@@ -60,4 +68,41 @@ void firstSetting(BuildContext context) async {
   }
   context.read(alreadyAnsweredIdsProvider).state =
       prefs.getStringList('alreadyAnsweredIds')!;
+
+  // 日時
+  if (prefs.getString('dataString') == null) {
+    final String todayString = DateFormat('yyyy/MM/dd').format(DateTime.now());
+
+    prefs.setString('dataString', todayString);
+  }
+
+  // 大喜利ニックネーム
+  context.read(ogiriNickNameProvider).state =
+      prefs.getString('ogiriNickName') ?? '';
+
+  // 大喜利パターン
+  List<String> ogiriPattern = prefs.getStringList('ogiriPattern') ?? [];
+
+  if (ogiriPattern.isEmpty) {
+    for (int i = 0; i < 69; i++) {
+      ogiriPattern.add(i.toString());
+    }
+
+    ogiriPattern.shuffle();
+    prefs.setStringList('ogiriPattern', ogiriPattern);
+  }
+
+  final List<Ogiri> allOgiriList = ogiriPattern.map((String stringOrderNo) {
+    final Ogiri targetOgiri = ogiriData[int.parse(stringOrderNo)];
+    return Ogiri(
+      id: targetOgiri.id,
+      title: targetOgiri.title,
+      sentence: targetOgiri.sentence,
+      totalGoodCount: 0,
+      ogiriAnswers: [],
+    );
+  }).toList();
+
+  // 大喜利のリストを設定
+  context.read(allOgiriListProvider).state = allOgiriList;
 }

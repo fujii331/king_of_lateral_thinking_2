@@ -16,9 +16,8 @@ class TitleWord extends HookWidget {
       opacity: displayFlg.value ? 1 : 0,
       child: Stack(
         children: [
-          Container(
-            padding: const EdgeInsets.only(top: 30.0),
-            height: 265,
+          SizedBox(
+            height: 235,
             child: Stack(
               children: [
                 Padding(
