@@ -5,8 +5,10 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:king_of_lateral_thinking_2/providers/common.provider.dart';
 import 'package:king_of_lateral_thinking_2/providers/player.provider.dart';
+import 'package:king_of_lateral_thinking_2/screens/ogiri_tutorial.screen.dart';
 import 'package:king_of_lateral_thinking_2/screens/quiz_list.screen.dart';
 import 'package:king_of_lateral_thinking_2/screens/tutorial_page.screen.dart';
+import 'package:king_of_lateral_thinking_2/services/title/to_ogiri_list.service.dart';
 import 'package:king_of_lateral_thinking_2/widgets/title/sound_mode.widget.dart';
 
 class TitleButton extends HookWidget {
@@ -22,8 +24,9 @@ class TitleButton extends HookWidget {
     final AudioCache soundEffect = useProvider(soundEffectProvider).state;
     final double seVolume = useProvider(seVolumeProvider).state;
 
-    final bool alreadyPlayedQuizFlg =
-        useProvider(alreadyPlayedQuizFlgProvider).state;
+    final bool alreadyPlayedQuiz = useProvider(alreadyPlayedQuizProvider).state;
+    final bool alreadyPlayedOgiri =
+        useProvider(alreadyPlayedOgiriProvider).state;
 
     return AnimatedOpacity(
       duration: const Duration(milliseconds: 500),
@@ -32,13 +35,24 @@ class TitleButton extends HookWidget {
         children: [
           _selectButton(
             context,
-            '　遊ぶ　',
+            '一人用水平思考',
             Colors.lightBlue,
             const Icon(Icons.account_balance),
             soundEffect,
             1,
             seVolume,
-            alreadyPlayedQuizFlg,
+            alreadyPlayedQuiz,
+          ),
+          const SizedBox(height: 25),
+          _selectButton(
+            context,
+            '水平思考大喜利',
+            Colors.pink,
+            const Icon(Icons.question_answer),
+            soundEffect,
+            2,
+            seVolume,
+            alreadyPlayedOgiri,
           ),
           const SizedBox(height: 25),
           _selectButton(
@@ -47,7 +61,7 @@ class TitleButton extends HookWidget {
             Colors.lime,
             const Icon(Icons.music_note),
             soundEffect,
-            2,
+            3,
             seVolume,
             true,
           ),
@@ -64,10 +78,10 @@ class TitleButton extends HookWidget {
     AudioCache soundEffect,
     int buttonPuttern,
     double seVolume,
-    bool alreadyPlayedFlg,
+    bool alreadyPlayed,
   ) {
     return SizedBox(
-      width: 140,
+      width: 190,
       height: 40,
       child: ElevatedButton.icon(
         icon: icon,
@@ -95,7 +109,7 @@ class TitleButton extends HookWidget {
             volume: seVolume,
           );
           if (buttonPuttern == 1) {
-            if (alreadyPlayedFlg) {
+            if (alreadyPlayed) {
               Navigator.of(context).pushNamed(
                 QuizListScreen.routeName,
               );
@@ -106,12 +120,21 @@ class TitleButton extends HookWidget {
               );
             }
           } else if (buttonPuttern == 2) {
+            if (alreadyPlayed) {
+              toOgiriList(context, false);
+            } else {
+              Navigator.of(context).pushNamed(
+                OgiriTutorialScreen.routeName,
+                arguments: false,
+              );
+            }
+          } else if (buttonPuttern == 3) {
             AwesomeDialog(
               context: context,
               dialogType: DialogType.NO_HEADER,
               headerAnimationLoop: false,
               animType: AnimType.SCALE,
-              width: MediaQuery.of(context).size.width * .86 > 650 ? 650 : null,
+              width: MediaQuery.of(context).size.width * .86 > 550 ? 550 : null,
               body: SoundMode(soundEffect: soundEffect),
             ).show();
             // 分析データ作成用
@@ -130,6 +153,43 @@ class TitleButton extends HookWidget {
             //     'userCount': 0,
             //     'noHintCount': 0,
             //   });
+            // }
+
+            // 大喜利データ作成
+            // for (int i = 1; i <= 69; i++) {
+            //   DatabaseReference firebaseInstance = FirebaseDatabase.instance
+            //       .ref()
+            //       .child('ogiri/' + i.toString());
+
+            //   final boya = boyaData[i - 1];
+
+            //   firebaseInstance.push().set(
+            //     {
+            //       'answer': boya.answer,
+            //       'nickName': boya.nickName,
+            //       'dateInt': boya.dateInt,
+            //       'goodCount': boya.goodCount,
+            //       'allowed': 1,
+            //     },
+            //   );
+            // }
+
+            // for (int i = 1; i <= 69; i++) {
+            //   DatabaseReference firebaseInstance = FirebaseDatabase.instance
+            //       .ref()
+            //       .child('ogiri/' + i.toString());
+
+            //   final osama = osamaData[i - 1];
+
+            //   firebaseInstance.push().set(
+            //     {
+            //       'answer': osama.answer,
+            //       'nickName': osama.nickName,
+            //       'dateInt': osama.dateInt,
+            //       'goodCount': osama.goodCount,
+            //       'allowed': 1,
+            //     },
+            //   );
             // }
           }
         },

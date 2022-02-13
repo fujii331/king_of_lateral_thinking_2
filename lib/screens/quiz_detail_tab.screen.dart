@@ -38,8 +38,6 @@ class QuizDetailTabScreen extends HookWidget {
     final bool subHintOpened = useProvider(subHintOpenedProvider).state;
     final int hintStatus = useProvider(hintStatusProvider).state;
     final double seVolume = useProvider(seVolumeProvider).state;
-    final bool alwaysDisplayInput =
-        useProvider(alwaysDisplayInputProvider).state;
 
     final ValueNotifier<int> workHintState = useState<int>(0);
 
@@ -54,8 +52,6 @@ class QuizDetailTabScreen extends HookWidget {
 
     useEffect(() {
       WidgetsBinding.instance!.addPostFrameCallback((_) async {
-        // await shouldUpdate(context);
-
         // 広告読み込み
         interstitialLoading(
           interstitialAd,
@@ -64,164 +60,185 @@ class QuizDetailTabScreen extends HookWidget {
       return null;
     }, const []);
 
-    return Scaffold(
-      backgroundColor: const Color(0x55555555),
-      extendBodyBehindAppBar: true,
-      appBar: AppBar(
-        title: Text(
-          quiz.title,
-          style: const TextStyle(
-            fontFamily: 'KaiseiOpti',
-          ),
+    return Container(
+      decoration: const BoxDecoration(
+        image: DecorationImage(
+          image:
+              AssetImage('assets/images/background/quiz_datail_tab_back.jpg'),
+          fit: BoxFit.cover,
         ),
-        shape: const RoundedRectangleBorder(
-          borderRadius: BorderRadius.only(
-            bottomLeft: Radius.circular(10),
-            bottomRight: Radius.circular(10),
+      ),
+      child: Scaffold(
+        backgroundColor: const Color(0x15555555),
+        extendBodyBehindAppBar: true,
+        appBar: AppBar(
+          title: Text(
+            quiz.title,
+            style: const TextStyle(
+              fontFamily: 'KaiseiOpti',
+            ),
           ),
+          shape: const RoundedRectangleBorder(
+            borderRadius: BorderRadius.only(
+              bottomLeft: Radius.circular(10),
+              bottomRight: Radius.circular(10),
+            ),
+          ),
+          elevation: 0,
+          centerTitle: true,
+          backgroundColor: Colors.blueGrey.shade800.withOpacity(0.6),
+          actions: <Widget>[
+            IconButton(
+              iconSize: 22,
+              icon: Icon(
+                subHintOpened ? Icons.info : Icons.lightbulb,
+                color: Colors.orange.shade400,
+              ),
+              onPressed: subHintOpened
+                  ? () {
+                      soundEffect.play(
+                        'sounds/tap.mp3',
+                        isNotification: true,
+                        volume: seVolume,
+                      );
+                      AwesomeDialog(
+                        context: context,
+                        dialogType: DialogType.NO_HEADER,
+                        headerAnimationLoop: false,
+                        animType: AnimType.SCALE,
+                        width: MediaQuery.of(context).size.width * .86 > 550
+                            ? 550
+                            : null,
+                        body: OpenedSubHintModal(
+                          subHints: quiz.subHints,
+                        ),
+                      ).show();
+                    }
+                  : () {
+                      soundEffect.play(
+                        'sounds/hint.mp3',
+                        isNotification: true,
+                        volume: seVolume,
+                      );
+                      AwesomeDialog(
+                        context: context,
+                        dialogType: DialogType.QUESTION,
+                        headerAnimationLoop: false,
+                        animType: AnimType.BOTTOMSLIDE,
+                        width: MediaQuery.of(context).size.width * .86 > 550
+                            ? 550
+                            : null,
+                        body: SubHintModal(
+                          screenContext: context,
+                          subHints: quiz.subHints,
+                          quizId: quiz.id,
+                        ),
+                      ).show();
+                    },
+            ),
+            IconButton(
+              icon: const Icon(
+                Icons.lightbulb,
+                color: Colors.yellow,
+              ),
+              onPressed: () {
+                soundEffect.play(
+                  'sounds/hint.mp3',
+                  isNotification: true,
+                  volume: seVolume,
+                );
+                workHintState.value = hintStatus;
+                AwesomeDialog(
+                  context: context,
+                  dialogType: DialogType.QUESTION,
+                  headerAnimationLoop: false,
+                  animType: AnimType.BOTTOMSLIDE,
+                  width: MediaQuery.of(context).size.width * .86 > 550
+                      ? 550
+                      : null,
+                  body: HintModal(
+                    screenContext: context,
+                    quiz: quiz,
+                    subjectController: subjectController,
+                    relatedWordController: relatedWordController,
+                    workHintValue: workHintState.value,
+                  ),
+                ).show();
+              },
+            ),
+          ],
         ),
-        elevation: 0,
-        centerTitle: true,
-        backgroundColor: Colors.blueGrey.shade800.withOpacity(0.6),
-        actions: <Widget>[
-          IconButton(
-            iconSize: 22,
-            icon: Icon(
-              subHintOpened ? Icons.info : Icons.lightbulb,
-              color: Colors.orange.shade400,
+        resizeToAvoidBottomInset: true,
+        bottomNavigationBar: BottomNavigationBar(
+          type: BottomNavigationBarType.shifting,
+          selectedItemColor: Colors.yellow.shade200,
+          unselectedItemColor: Colors.grey.shade200,
+          items: <BottomNavigationBarItem>[
+            BottomNavigationBarItem(
+              icon: const Icon(Icons.chat),
+              label: '質問',
+              backgroundColor: Colors.indigo.shade700.withOpacity(0.5),
             ),
-            onPressed: subHintOpened
-                ? () {
-                    soundEffect.play(
-                      'sounds/tap.mp3',
-                      isNotification: true,
-                      volume: seVolume,
-                    );
-                    AwesomeDialog(
-                      context: context,
-                      dialogType: DialogType.NO_HEADER,
-                      headerAnimationLoop: false,
-                      animType: AnimType.SCALE,
-                      width: MediaQuery.of(context).size.width * .86 > 650
-                          ? 650
-                          : null,
-                      body: OpenedSubHintModal(
-                        subHints: quiz.subHints,
-                      ),
-                    ).show();
-                  }
-                : () {
-                    soundEffect.play(
-                      'sounds/hint.mp3',
-                      isNotification: true,
-                      volume: seVolume,
-                    );
-                    AwesomeDialog(
-                      context: context,
-                      dialogType: DialogType.QUESTION,
-                      headerAnimationLoop: false,
-                      animType: AnimType.BOTTOMSLIDE,
-                      width: MediaQuery.of(context).size.width * .86 > 650
-                          ? 650
-                          : null,
-                      body: SubHintModal(
-                        screenContext: context,
-                        subHints: quiz.subHints,
-                        quizId: quiz.id,
-                      ),
-                    ).show();
-                  },
-          ),
-          IconButton(
-            icon: const Icon(
-              Icons.lightbulb,
-              color: Colors.yellow,
+            BottomNavigationBarItem(
+              icon: const Icon(Icons.list_alt),
+              label: '質問済',
+              backgroundColor: Colors.indigo.shade700.withOpacity(0.5),
             ),
-            onPressed: () {
-              soundEffect.play(
-                'sounds/hint.mp3',
-                isNotification: true,
-                volume: seVolume,
+            BottomNavigationBarItem(
+              icon: Icon(
+                Icons.campaign,
+                color:
+                    enableAnswer ? Colors.pink.shade300 : Colors.grey.shade700,
+              ),
+              label: '解答',
+              backgroundColor: Colors.indigo.shade700.withOpacity(0.5),
+            ),
+          ],
+          onTap: (int selectIndex) {
+            if (selectIndex != 2 || enableAnswer) {
+              screenNo.value = selectIndex;
+              pageController.animateToPage(
+                selectIndex,
+                duration: const Duration(milliseconds: 400),
+                curve: Curves.easeOut,
               );
-              workHintState.value = hintStatus;
-              AwesomeDialog(
-                context: context,
-                dialogType: DialogType.QUESTION,
-                headerAnimationLoop: false,
-                animType: AnimType.BOTTOMSLIDE,
-                width:
-                    MediaQuery.of(context).size.width * .86 > 650 ? 650 : null,
-                body: HintModal(
-                  screenContext: context,
-                  quiz: quiz,
-                  subjectController: subjectController,
-                  relatedWordController: relatedWordController,
-                  workHintValue: workHintState.value,
-                ),
-              ).show();
+            }
+          },
+          currentIndex: screenNo.value,
+        ),
+        body: PageView(
+            controller: pageController,
+            // ページ切り替え時に実行する処理
+            onPageChanged: (index) {
+              if (index != 2 || enableAnswer) {
+                screenNo.value = index;
+              }
             },
-          ),
-        ],
-      ),
-      resizeToAvoidBottomInset: alwaysDisplayInput,
-      bottomNavigationBar: BottomNavigationBar(
-        type: BottomNavigationBarType.shifting,
-        selectedItemColor: Colors.yellow.shade200,
-        unselectedItemColor: Colors.grey.shade200,
-        items: <BottomNavigationBarItem>[
-          BottomNavigationBarItem(
-            icon: const Icon(Icons.chat),
-            label: '質問',
-            backgroundColor: Colors.indigo.shade700.withOpacity(0.5),
-          ),
-          BottomNavigationBarItem(
-            icon: const Icon(Icons.list_alt),
-            label: '質問済',
-            backgroundColor: Colors.indigo.shade700.withOpacity(0.5),
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(
-              Icons.campaign,
-              color: enableAnswer ? Colors.pink.shade300 : Colors.grey.shade700,
-            ),
-            label: '解答',
-            backgroundColor: Colors.indigo.shade700.withOpacity(0.5),
-          ),
-        ],
-        onTap: (int selectIndex) {
-          if (selectIndex != 2 || enableAnswer) {
-            screenNo.value = selectIndex;
-            pageController.animateToPage(
-              selectIndex,
-              duration: const Duration(milliseconds: 400),
-              curve: Curves.easeOut,
-            );
-          }
-        },
-        currentIndex: screenNo.value,
-      ),
-      body: PageView(
-        controller: pageController,
-        // ページ切り替え時に実行する処理
-        onPageChanged: (index) {
-          if (index != 2 || enableAnswer) {
-            screenNo.value = index;
-          }
-        },
-        children: [
-          QuizDetail(
-            quiz: quiz,
-            subjectController: subjectController,
-            relatedWordController: relatedWordController,
-          ),
-          Questioned(
-            quizId: quiz.id,
-          ),
-          QuizAnswer(
-            quizId: quiz.id,
-            interstitialAd: interstitialAd,
-          ),
-        ],
+            children: enableAnswer
+                ? [
+                    QuizDetail(
+                      quiz: quiz,
+                      subjectController: subjectController,
+                      relatedWordController: relatedWordController,
+                    ),
+                    Questioned(
+                      quizId: quiz.id,
+                    ),
+                    QuizAnswer(
+                      quizId: quiz.id,
+                      interstitialAd: interstitialAd,
+                    ),
+                  ]
+                : [
+                    QuizDetail(
+                      quiz: quiz,
+                      subjectController: subjectController,
+                      relatedWordController: relatedWordController,
+                    ),
+                    Questioned(
+                      quizId: quiz.id,
+                    ),
+                  ]),
       ),
     );
   }

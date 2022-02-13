@@ -1,5 +1,8 @@
+import 'dart:io';
+
 import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:flutter/material.dart';
+import 'package:king_of_lateral_thinking_2/data/advertising.dart';
 
 void showInterstitialAd(
   BuildContext context,
@@ -25,10 +28,10 @@ void createInterstitialAd(
   int _numInterstitialLoadAttempts,
 ) {
   InterstitialAd.load(
-    // adUnitId: Platform.isAndroid
-    //     ? androidAnsweredInterstitalAdvid
-    //     : iosAnsweredInterstitalAdvid,
-    adUnitId: InterstitialAd.testAdUnitId,
+    adUnitId: Platform.isAndroid
+        ? androidAnsweredInterstitalAdvid
+        : iosAnsweredInterstitalAdvid,
+    // adUnitId: InterstitialAd.testAdUnitId,
     request: const AdRequest(),
     adLoadCallback: InterstitialAdLoadCallback(
       onAdLoaded: (InterstitialAd ad) {

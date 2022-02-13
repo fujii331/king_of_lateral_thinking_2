@@ -42,8 +42,8 @@ class AnotherAppLink extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final String storeUrl = Platform.isAndroid
-        ? 'https://play.google.com/store/apps/details?id=io.github.naoto613.thinking_battle'
-        : 'https://apps.apple.com/app/id1596581901';
+        ? 'https://play.google.com/store/apps/details?id=io.github.naoto613.lateral_thinking'
+        : 'https://apps.apple.com/app/id1572443299';
 
     return AnimatedOpacity(
       duration: const Duration(milliseconds: 500),
@@ -55,7 +55,7 @@ class AnotherAppLink extends StatelessWidget {
             Column(
               children: [
                 const Text(
-                  '別アプリ',
+                  '前作',
                   style: TextStyle(
                     color: Colors.white,
                     fontFamily: 'KaiseiOpti',
@@ -79,7 +79,7 @@ class AnotherAppLink extends StatelessWidget {
                       ),
                     ),
                     child: Image.asset(
-                      'assets/images/monster_icon.png',
+                      'assets/images/king_icon.png',
                     ),
                   ),
                 ),

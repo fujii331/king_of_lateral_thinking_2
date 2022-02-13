@@ -1,9 +1,12 @@
+import 'dart:io';
 import 'dart:math';
 
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
+import 'package:king_of_lateral_thinking_2/data/advertising.dart';
 import 'package:king_of_lateral_thinking_2/models/quiz.model.dart';
 import 'package:king_of_lateral_thinking_2/providers/player.provider.dart';
 import 'package:king_of_lateral_thinking_2/providers/quiz.provider.dart';
@@ -58,9 +61,85 @@ void showNewQuestionsRewardedAd(
       dialogType: DialogType.SUCCES,
       headerAnimationLoop: false,
       animType: AnimType.SCALE,
-      width: MediaQuery.of(context).size.width * .86 > 650 ? 650 : null,
+      width: MediaQuery.of(context).size.width * .86 > 550 ? 550 : null,
       body: NewQuestionsReplyModal(
         openQuizNumber: openQuizNumber,
+      ),
+    ).show();
+  });
+  rewardAd.value = null;
+}
+
+void showOgiriRewardedAd(
+  BuildContext context,
+  ValueNotifier<RewardedAd?> rewardAd,
+  String targetWeekDay,
+  ValueNotifier<bool> enableBrowseState,
+) {
+  if (rewardAd.value == null) {
+    return;
+  }
+  rewardAd.value!.fullScreenContentCallback = FullScreenContentCallback(
+    onAdDismissedFullScreenContent: (RewardedAd ad) {
+      ad.dispose();
+    },
+    onAdFailedToShowFullScreenContent: (RewardedAd ad, AdError error) {
+      ad.dispose();
+      AwesomeDialog(
+        context: context,
+        dialogType: DialogType.NO_HEADER,
+        headerAnimationLoop: false,
+        dismissOnTouchOutside: true,
+        dismissOnBackKeyPress: true,
+        showCloseIcon: true,
+        animType: AnimType.SCALE,
+        width: MediaQuery.of(context).size.width * .86 > 550 ? 550 : null,
+        body: const CommentModal(
+          topText: '取得失敗',
+          secondText: '大喜利を見られるようにできませんでした。\n再度お試しください。',
+          closeButtonFlg: true,
+        ),
+      ).show();
+    },
+  );
+  rewardAd.value!.setImmersiveMode(true);
+  rewardAd.value!.show(
+      onUserEarnedReward: (RewardedAd ad, RewardItem reward) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+
+    context.read(enableBrowseOgiriListProvider).state.add(targetWeekDay);
+
+    prefs.setStringList('enableBrowseOgiriList',
+        context.read(enableBrowseOgiriListProvider).state);
+    prefs.setString(
+        'dataString', DateFormat('yyyy/MM/dd').format(DateTime.now()));
+
+    final String weekDay = targetWeekDay == '1'
+        ? '月'
+        : targetWeekDay == '2'
+            ? '火'
+            : targetWeekDay == '3'
+                ? '水'
+                : targetWeekDay == '4'
+                    ? '木'
+                    : targetWeekDay == '5'
+                        ? '金'
+                        : targetWeekDay == '6'
+                            ? '土'
+                            : '日';
+
+    enableBrowseState.value = true;
+
+    AwesomeDialog(
+      context: context,
+      dialogType: DialogType.SUCCES,
+      headerAnimationLoop: false,
+      animType: AnimType.SCALE,
+      width: MediaQuery.of(context).size.width * .86 > 550 ? 550 : null,
+      body: CommentModal(
+        topText: '閲覧制限を解除',
+        secondText: '本日中は' + weekDay + '曜日の大喜利も閲覧できるようになりました！',
+        closeButtonFlg: true,
       ),
     ).show();
   });
@@ -163,14 +242,18 @@ void createRewardedAd(
   int rewardNumber,
 ) {
   RewardedAd.load(
-    // adUnitId: Platform.isAndroid
-    //     ? rewardNumber == 1
-    //         ? androidNewQuestionsRewardAdvid
-    //         : androidHintRewardAdvid
-    //     : rewardNumber == 1
-    //         ? iosNewQuestionsRewardAdvid
-    //         : iosHintRewardAdvid,
-    adUnitId: RewardedAd.testAdUnitId,
+    adUnitId: Platform.isAndroid
+        ? rewardNumber == 1
+            ? androidNewQuestionsRewardAdvid
+            : rewardNumber == 2
+                ? androidHintRewardAdvid
+                : androidEnableOgiriBrowseRewardAdvid
+        : rewardNumber == 1
+            ? iosNewQuestionsRewardAdvid
+            : rewardNumber == 2
+                ? iosHintRewardAdvid
+                : iosEnableOgiriBrowseRewardAdvid,
+    // adUnitId: RewardedAd.testAdUnitId,
     request: const AdRequest(),
     rewardedAdLoadCallback: RewardedAdLoadCallback(
       onAdLoaded: (RewardedAd ad) {
@@ -230,7 +313,7 @@ void afterGotHint(
     dialogType: DialogType.SUCCES,
     headerAnimationLoop: false,
     animType: AnimType.SCALE,
-    width: MediaQuery.of(context).size.width * .86 > 650 ? 650 : null,
+    width: MediaQuery.of(context).size.width * .86 > 550 ? 550 : null,
     body: CommentModal(
       topText: hint == 0
           ? 'ヒント1解放！'
@@ -296,7 +379,7 @@ void afterGotSubHint(
     dialogType: DialogType.NO_HEADER,
     headerAnimationLoop: false,
     animType: AnimType.SCALE,
-    width: MediaQuery.of(context).size.width * .86 > 650 ? 650 : null,
+    width: MediaQuery.of(context).size.width * .86 > 550 ? 550 : null,
     body: OpenedSubHintModal(
       subHints: subHints,
     ),

@@ -60,7 +60,6 @@ void checkQuestions(
       context.read(beforeWordProvider).state = '主語だけ変えれば質問できそう！';
       context.read(askingQuestionsProvider).state = [];
     } else {
-      // TODOselectedQuestionProviderは毎回初期化が必要では？
       context.read(selectedQuestionProvider).state = dummyQuestion;
       context.read(beforeWordProvider).state = '↓質問を選択';
       context.read(askingQuestionsProvider).state = includeSubjectQuestions;
@@ -100,22 +99,22 @@ void submitData(
       context.read(relatedWordCountProvider).state++;
     }
     // ヒントを使っていなかったらサーバーに保存
-    if (hintStatus == 0) {
-      FirebaseDatabase.instance
-          .ref()
-          .child('input_words/' +
-              quiz.id.toString() +
-              '/' +
-              enteredSubject +
-              '/' +
-              enteredRelatedWord)
-          .push()
-          .set(
-        {
-          'time': DateTime.now().toString(),
-        },
-      );
-    }
+    // if (hintStatus == 0) {
+    //   FirebaseDatabase.instance
+    //       .ref()
+    //       .child('input_words/' +
+    //           quiz.id.toString() +
+    //           '/' +
+    //           enteredSubject +
+    //           '/' +
+    //           enteredRelatedWord)
+    //       .push()
+    //       .set(
+    //     {
+    //       'time': DateTime.now().toString(),
+    //     },
+    //   );
+    // }
 
     subjectData.value = enteredSubject;
     relatedWordData.value = enteredRelatedWord;

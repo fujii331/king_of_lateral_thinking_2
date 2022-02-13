@@ -40,6 +40,40 @@ class AnalyticsModal extends HookWidget {
               top: 18,
             ),
             child: Text(
+              '正解者数',
+              style: TextStyle(
+                fontSize: 15.0,
+                fontFamily: 'SawarabiGothic',
+                color: Colors.green.shade600,
+              ),
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.only(
+              top: 5,
+            ),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              children: [
+                _analyticsItem(
+                  '合計',
+                  data.userCount.toString() + '人',
+                  false,
+                ),
+                _analyticsItem(
+                  'ヒント未使用',
+                  data.noHintCount.toString() + '人',
+                  true,
+                ),
+              ],
+            ),
+          ),
+          Container(
+            width: double.infinity,
+            padding: const EdgeInsets.only(
+              top: 18,
+            ),
+            child: Text(
               'ヒント使用率',
               style: TextStyle(
                 fontSize: 15.0,

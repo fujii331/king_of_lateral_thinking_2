@@ -39,7 +39,7 @@ class QuizAnswer extends HookWidget {
         Container(
           height: MediaQuery.of(context).size.height,
           width: MediaQuery.of(context).size.width,
-          color: Colors.black.withOpacity(0.3),
+          color: Colors.black.withOpacity(0.9),
         ),
         Center(
           child: Padding(

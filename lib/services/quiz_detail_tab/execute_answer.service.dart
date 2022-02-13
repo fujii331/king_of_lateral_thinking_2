@@ -26,6 +26,17 @@ void executeAnswer(
     volume: seVolume,
   );
 
+  final bool clearedFirst = !alreadyAnsweredIds.contains(quizId.toString());
+
+  if (clearedFirst) {
+    // 正解した問題を登録
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+
+    context.read(alreadyAnsweredIdsProvider).state.add(quizId.toString());
+    prefs.setStringList(
+        'alreadyAnsweredIds', context.read(alreadyAnsweredIdsProvider).state);
+  }
+
   if (interstitialAd.value != null) {
     // 広告を表示する
     showInterstitialAd(
@@ -48,17 +59,6 @@ void executeAnswer(
     }
   }
 
-  final bool clearedFirst = !alreadyAnsweredIds.contains(quizId.toString());
-
-  if (clearedFirst) {
-    // 正解した問題を登録
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-
-    context.read(alreadyAnsweredIdsProvider).state.add(quizId.toString());
-    prefs.setStringList(
-        'alreadyAnsweredIds', context.read(alreadyAnsweredIdsProvider).state);
-  }
-
   final Future<Analytics?> gotAnalyticsData = getAnalyticsData(
     context,
     quizId,
@@ -78,7 +78,7 @@ void executeAnswer(
     dismissOnTouchOutside: false,
     dismissOnBackKeyPress: false,
     animType: AnimType.SCALE,
-    width: MediaQuery.of(context).size.width * .86 > 650 ? 650 : null,
+    width: MediaQuery.of(context).size.width * .86 > 550 ? 550 : null,
     body: CorrectAnswerModal(
       comment: finalAnswerComment,
       data: data,
