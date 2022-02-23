@@ -1,5 +1,6 @@
 import 'dart:math';
 
+// import 'package:firebase_database/firebase_database.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
@@ -24,7 +25,7 @@ void checkQuestions(
       .toList();
 
   // 対象の関連語では質問が見つからなかった場合
-  // 質問が7個以上見つかった場合
+  // 質問が5個以上見つかった場合
   // 使用禁止用語を使っていた場合
   if (includeRelatedWordQuestions.isEmpty ||
       includeRelatedWordQuestions.length > 5 ||
@@ -38,7 +39,7 @@ void checkQuestions(
     if (enableQuestionsCount == 0) {
       context.read(beforeWordProvider).state = 'その主語ではもう質問できないようです。';
     } else {
-      final randomNumber = Random().nextInt(2);
+      final randomNumber = Random().nextInt(3);
       if (randomNumber == 0) {
         context.read(beforeWordProvider).state = '質問が見つかりませんでした。';
       } else {
@@ -99,22 +100,22 @@ void submitData(
       context.read(relatedWordCountProvider).state++;
     }
     // ヒントを使っていなかったらサーバーに保存
-    // if (hintStatus == 0) {
-    //   FirebaseDatabase.instance
-    //       .ref()
-    //       .child('input_words/' +
-    //           quiz.id.toString() +
-    //           '/' +
-    //           enteredSubject +
-    //           '/' +
-    //           enteredRelatedWord)
-    //       .push()
-    //       .set(
-    //     {
-    //       'time': DateTime.now().toString(),
-    //     },
-    //   );
-    // }
+    if ((quiz.id > 37 || quiz.id == 12 || quiz.id == 8) && hintStatus == 0) {
+      FirebaseDatabase.instance
+          .ref()
+          .child('input_words/' +
+              quiz.id.toString() +
+              '/' +
+              enteredSubject +
+              '/' +
+              enteredRelatedWord)
+          .push()
+          .set(
+        {
+          'time': DateTime.now().toString(),
+        },
+      );
+    }
 
     subjectData.value = enteredSubject;
     relatedWordData.value = enteredRelatedWord;

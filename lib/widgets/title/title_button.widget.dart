@@ -1,5 +1,6 @@
 import 'package:audioplayers/audioplayers.dart';
 import 'package:awesome_dialog/awesome_dialog.dart';
+// import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
@@ -36,7 +37,7 @@ class TitleButton extends HookWidget {
           _selectButton(
             context,
             '一人用水平思考',
-            Colors.lightBlue,
+            Colors.blue,
             const Icon(Icons.account_balance),
             soundEffect,
             1,
@@ -57,7 +58,7 @@ class TitleButton extends HookWidget {
           const SizedBox(height: 25),
           _selectButton(
             context,
-            '音量設定',
+            '　音量設定　　',
             Colors.lime,
             const Icon(Icons.music_note),
             soundEffect,
@@ -89,6 +90,7 @@ class TitleButton extends HookWidget {
           label,
           style: TextStyle(
             color: Colors.blueGrey.shade50,
+            fontFamily: 'KaiseiOpti',
           ),
         ),
         style: ElevatedButton.styleFrom(
@@ -138,7 +140,7 @@ class TitleButton extends HookWidget {
               body: SoundMode(soundEffect: soundEffect),
             ).show();
             // 分析データ作成用
-            // for (int i = 1; i <= 36; i++) {
+            // for (int i = 37; i <= 60; i++) {
             //   DatabaseReference firebaseInstance = FirebaseDatabase.instance
             //       .ref()
             //       .child('analytics/' + i.toString());
