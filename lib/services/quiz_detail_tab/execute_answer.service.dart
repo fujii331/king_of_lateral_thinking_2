@@ -57,6 +57,17 @@ void executeAnswer(
       }
       await Future.delayed(const Duration(seconds: 1));
     }
+
+    if (interstitialAd.value != null) {
+      // 広告を表示する
+      showInterstitialAd(
+        context,
+        interstitialAd,
+      );
+      await Future.delayed(
+        const Duration(milliseconds: 500),
+      );
+    }
   }
 
   final Future<Analytics?> gotAnalyticsData = getAnalyticsData(

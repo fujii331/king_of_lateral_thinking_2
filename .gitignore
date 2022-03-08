@@ -44,8 +44,12 @@ app.*.map.json
 /android/app/debug
 /android/app/profile
 /android/app/release
+/android/app/google-services.json
 
 /assets
 /android/app/src/main/res
 /ios/Runner/Assets.xcassets
 /web
+/lib/data
+ios/Runner/GoogleService-Info.plist
+android/app/src/main/ic_launcher-playstore.png

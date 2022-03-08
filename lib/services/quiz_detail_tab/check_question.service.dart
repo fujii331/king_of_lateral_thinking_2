@@ -1,7 +1,6 @@
 import 'dart:math';
 
 // import 'package:firebase_database/firebase_database.dart';
-import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:king_of_lateral_thinking_2/data/restriction_words.dart';
@@ -100,22 +99,22 @@ void submitData(
       context.read(relatedWordCountProvider).state++;
     }
     // ヒントを使っていなかったらサーバーに保存
-    if ((quiz.id > 37 || quiz.id == 12 || quiz.id == 8) && hintStatus == 0) {
-      FirebaseDatabase.instance
-          .ref()
-          .child('input_words/' +
-              quiz.id.toString() +
-              '/' +
-              enteredSubject +
-              '/' +
-              enteredRelatedWord)
-          .push()
-          .set(
-        {
-          'time': DateTime.now().toString(),
-        },
-      );
-    }
+    // if (quiz.id > 37 && hintStatus == 0) {
+    //   FirebaseDatabase.instance
+    //       .ref()
+    //       .child('input_words/' +
+    //           quiz.id.toString() +
+    //           '/' +
+    //           enteredSubject +
+    //           '/' +
+    //           enteredRelatedWord)
+    //       .push()
+    //       .set(
+    //     {
+    //       'time': DateTime.now().toString(),
+    //     },
+    //   );
+    // }
 
     subjectData.value = enteredSubject;
     relatedWordData.value = enteredRelatedWord;
